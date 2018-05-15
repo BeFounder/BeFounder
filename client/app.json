@@ -1,5 +1,6 @@
 {
   "pages": [
+    "pages/title/title",
     "pages/index/index",
     "pages/addCgi/addCgi"
   ],
