@@ -1,0 +1,4 @@
+<view class='container'>
+  <map controls='{{controls}}'>
+  </map>
+</view>

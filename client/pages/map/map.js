@@ -1,11 +1,11 @@
-// pages/title/title.js
+// pages/map/map.js
 Page({
 
   /**
    * 页面的初始数据
    */
   data: {
-  
+    
   },
 
   /**
@@ -62,13 +62,5 @@ Page({
    */
   onShareAppMessage: function () {
   
-  },
-
-  Gotopage : function(event) {
-    var url = event.currentTarget.dataset.url
-
-    wx.navigateTo({
-      url: `../${url}/${url}`,
-    })
   }
 })

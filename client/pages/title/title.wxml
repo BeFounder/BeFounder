@@ -1,5 +1,9 @@
 <view class="container">
-  <button bindtap='gotoindex'>
+  <button bindtap='Gotopage' data-url='index'>
       登录
+  </button>
+
+  <button bindtap='Gotopage' data-url='map'>
+      地图界面
   </button>
 </view>
