@@ -56,4 +56,10 @@
             <text>快速增加 CGI</text>
         </navigator>
     </view>
+
+    <view class="uploader">
+        <navigator url="../test/test" class="uploader-text">
+            <text>前往测试页</text>
+        </navigator>
+    </view>
 </view>
