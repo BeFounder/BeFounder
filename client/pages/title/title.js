@@ -70,5 +70,23 @@ Page({
     wx.navigateTo({
       url: `../${url}/${url}`,
     })
+  },
+
+  GetLoc : function() {
+    wx.chooseLocation({
+      success: function (res) {
+        // success
+        console.log(res, "location")
+        console.log(res.name)
+        console.log(res.latitude)
+        console.log(res.longitude)
+      },
+      fail: function () {
+        console.log("fail")
+      },
+      complete: function () {
+        console.log("complete")
+      }
+    })
   }
 })
