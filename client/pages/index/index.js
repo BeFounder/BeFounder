@@ -11,6 +11,7 @@ Page({
         requestResult: ''
     },
 
+
     // 用户登录示例
     login: function() {
         if (this.data.logged) return
@@ -101,8 +102,6 @@ Page({
                 util.showBusy('正在上传')
                 var filePath = res.tempFilePaths[0]
 
-                console.log(filePath)
-
                 // 上传图片
                 wx.uploadFile({
                     url: config.service.uploadUrl,
@@ -111,9 +110,12 @@ Page({
 
                     success: function(res){
                         util.showSuccess('上传图片成功')
+                        console.log(res)
                         res = JSON.parse(res.data)
+                        console.log(res)
                         that.setData({
-                            imgUrl: res.data.imgUrl
+                            imgUrl: res.data.imgUrl,
+                            url11: filePath
                         })
                     },
 
@@ -202,7 +204,7 @@ Page({
         if (this.tunnel && this.tunnel.isActive()) {
             // 使用信道给服务器推送「speak」消息
             this.tunnel.emit('speak', {
-                'word': 'I say something at ' + new Date(),
+              'word': '1233',
             });
         }
     },
