@@ -64,9 +64,37 @@ Page({
   
   },
 
-  gotoindex : function() {
-      wx.redirectTo({
-        url: '../index/index',
-      })
-  }
+  //跳转到index页面
+  toIndex: function (event) {
+    wx.redirectTo({
+      url: '../index/index',
+    })
+  },
+
+  /*Gotopage : function(event) {
+    var url = event.currentTarget.dataset.url
+
+    wx.navigateTo({
+      url: `../${url}/${url}`,
+    })
+  },
+
+  GetLoc : function() {
+    wx.chooseLocation({
+      success: function (res) {
+        // success
+        console.log(res, "location")
+        console.log(res.name)
+        console.log(res.latitude)
+        console.log(res.longitude)
+      },
+      fail: function () {
+        console.log("fail")
+      },
+      complete: function () {
+        console.log("complete")
+      }
+    })
+>>>>>>> 543f5f4d4cb1f67a1c3e3cd33e6f702988a55c0c
+  }*/
 })

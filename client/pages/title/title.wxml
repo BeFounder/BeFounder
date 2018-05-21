@@ -1,5 +1,14 @@
 <view class="container">
-  <button bindtap='gotoindex'>
+  <text>中间需要一个Logo 本页面加一个背景色（我建议蓝色比较好）
+   登录放在中间靠下方的位置 懂8 @前端组</text>
+
+  <!--<button bindtap='Gotopage' data-url='index'>
+      登录
+  </button>-->
+
+  <button bindtap='toIndex'>
       登录
   </button>
+
+  <text>登录按钮要实现确认授权的功能 @功能组</text>
 </view>
