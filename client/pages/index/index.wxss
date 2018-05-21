@@ -38,12 +38,16 @@ right: 0;
 } 
 
 .buttom{  
-  width: 20vw;
+  width: 30%;
   height: 20vw;
   background: #fff;
   margin-bottom: 5vw;
+} 
+
+.buttomList{  
+  display: flex;
+  flex-direction: row;
   position: fixed;
   bottom: 0 ;
-  right: 0;
-  margin-right: 5vw;
+  width: 100%;
 } 

@@ -1,7 +1,7 @@
 var app = getApp()
 Page({
   data: {
-    navbar: ['失物招领', '寻物启事', '我的信息'],
+    navbar: ['失物招领', '寻物启事'],
     currentTab: 0
   },
   navbarTap: function (e) {
@@ -17,4 +17,18 @@ Page({
       url: `../${url}/${url}`,
     })
   },
+
+  toPost:function(event)
+  {
+    wx.navigateTo({
+      url: '../post/post',
+    })
+  },
+
+  toUser: function (event) {
+    wx.navigateTo({
+      url: '../user/user',
+    })
+  }
+
 })

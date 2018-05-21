@@ -5,20 +5,13 @@
 
 <!--首页-->
 <view hidden="{{currentTab!==0}}">
-  差不多这个意思 网上随便找的代码 改下主题颜色什么的
-  如果觉得不好看可以去看看navbar怎么写 反正是这个东西
-  然后是里面的结构块记得做出来
+  <text>因为我觉得搜索和发帖都只在失物招领和寻物启事里共有，我就把个人信息拉出来做了悬浮按钮
+  然后觉得两个悬浮按钮很丑索性把搜索也做成了悬浮按钮
+  搜索会弹出一个搜索框（还没做），根据导航页面和所搜信息检索，也就是说在失物招领页就只能搜到失物招领信息（靠后端了）
+  发帖链接到发帖页面，个人连接到个人信息页面
+  然后我不是很懂你们这个addcgi是个什么东西就没改
 
-  添加按钮和搜索按钮做成圆形可点击图片按钮
-  悬浮到右下角竖着排列比较好吧（建议）
-  我这里随便放了
-  
-  <view class='container'>
-    <button bindtap='Gotopage' data-url='addCgi'>+</button>
-    <button>search</button>
-  </view>
-  
-
+  </text>
 </view>
 
 <!--搜索-->
@@ -32,19 +25,22 @@
             <text>快速增加 CGI</text>
         </navigator>
     </view>
-
-    <view class="uploader">
-        <navigator url="../test/test" open-type="navigate" class="uploader-text">
-            <text>前往测试页</text>
-        </navigator>
-    </view>
 =======
 <!--我-->
 <view hidden="{{currentTab!==2}}">
   tab_03
 >>>>>>> 543f5f4d4cb1f67a1c3e3cd33e6f702988a55c0c
-</view>
 
-<button class='buttom'>
-    消息
-</button>
+<!--三个悬浮框-->
+</view>
+<view class='buttomList'>
+    <button class='buttom'>
+        搜索
+    </button>
+    <button class='buttom' bindtap='toPost'>
+        发帖
+    </button>
+    <button class='buttom' bindtap='toUser'>
+        个人
+    </button>
+</view>
