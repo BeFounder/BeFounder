@@ -7,7 +7,7 @@
 <view hidden="{{currentTab!==0}}">
   <text>因为我觉得搜索和发帖都只在失物招领和寻物启事里共有，我就把个人信息拉出来做了悬浮按钮
   然后觉得两个悬浮按钮很丑索性把搜索也做成了悬浮按钮
-  搜索会弹出一个搜索框（还没做），根据导航页面和所搜信息检索，也就是说在失物招领页就只能搜到失物招领信息（靠后端了）
+  搜索会弹出一个搜索框，根据导航页面和所搜信息检索，也就是说在失物招领页就只能搜到失物招领信息（靠后端了）
   发帖链接到发帖页面，个人连接到个人信息页面
   然后我不是很懂你们这个addcgi是个什么东西就没改
 
@@ -34,7 +34,7 @@
 <!--三个悬浮框-->
 </view>
 <view class='buttomList'>
-    <button class='buttom'>
+    <button class='buttom' type="primary"bindtap="modalinput">
         搜索
     </button>
     <button class='buttom' bindtap='toPost'>
@@ -44,3 +44,7 @@
         个人
     </button>
 </view>
+
+<modal hidden="{{hiddenmodalput}}" title="请输入搜索内容" confirm-text="搜索" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">  
+    <input type='text'placeholder="请输入内容" auto-focus/>  
+</modal> 

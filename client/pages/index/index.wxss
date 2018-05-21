@@ -39,9 +39,9 @@ right: 0;
 
 .buttom{  
   width: 30%;
-  height: 20vw;
+  height: 15vw;
   background: #fff;
-  margin-bottom: 5vw;
+  margin-bottom: 2vw;
 } 
 
 .buttomList{  
