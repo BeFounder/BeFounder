@@ -34,7 +34,7 @@
 <!--三个悬浮框-->
 </view>
 <view class='buttomList'>
-    <button class='buttom' type="primary"bindtap="modalinput">
+    <button class='buttom' bindtap="modalinput">
         搜索
     </button>
     <button class='buttom' bindtap='toPost'>

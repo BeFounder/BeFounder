@@ -1,0 +1,9 @@
+
+.page-section{
+  margin-bottom: 20rpx;
+}
+
+.photos{
+  width:33vw;
+  height: 100px;
+}
