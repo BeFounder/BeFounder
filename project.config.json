@@ -8,5 +8,6 @@
 	},
 	"appid": "wxbd77164883923d58",
 	"projectname": "BeFounder",
+	"compileType": "miniprogram",
 	"condition": {}
 }

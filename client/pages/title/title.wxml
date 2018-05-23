@@ -9,6 +9,10 @@
   <button bindtap='toIndex'>
       登录
   </button>
+  
+  <!--也许不用为登录专门做一个界面？游客就可以浏览信息，在点击发帖或者点进个人信息那里再要求登录  -->
+  <button class="request-userinfo" wx:if="{{!logged}}" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo">点击登录</button>
+  <text class="request-userinfo" wx:else>{{userInfo.nickName}}</text>
 
   <text>登录按钮要实现确认授权的功能 @功能组</text>
 </view>
