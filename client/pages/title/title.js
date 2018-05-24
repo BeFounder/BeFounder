@@ -158,7 +158,31 @@ Page({
         }
 
       }
-    })
+    });
+
+    wx.login({
+      success: function (e) {
+        if (e.code) {
+          console.log(e.code);
+          wx.request({
+            url: `${config.service.host}/weapp/getopenid`,
+            data: {
+              code: e.code
+            },
+            method: 'GET',
+            header: {
+              'content-type': 'application/json'
+            },
+            success: function (res) {
+              console.log(res.data);
+            },
+            fail: function (error) {
+              console.log(error);
+            }
+          })
+        }
+      }
+    });
 
   },
 

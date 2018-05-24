@@ -14,8 +14,8 @@
   </block>
 
   <!--也许不用为登录专门做一个界面？游客就可以浏览信息，在点击发帖或者点进个人信息那里再要求登录  -->
-  <button class="request-userinfo" open-type="getUserInfo" bindgetuserinfo="bindGetUserInfo" loading='{{loading}}'>{{buttonText}}</button>
+  <button class="request-userinfo" open-type="getUserInfo"  bindgetuserinfo="bindGetUserInfo" loading='{{loading}}'>{{buttonText}}</button>
   
-
+<!--如果用户是新用户，第一次登录会自动弹出请求授权窗口，无需我们实现  -->
   <text>登录按钮要实现确认授权的功能 @功能组</text>
 </view>
