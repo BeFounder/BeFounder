@@ -11,7 +11,7 @@
 
     <view class="section">
         <image
-            class="photos"
+            style="width:{{imageWidth}}px;height:{{imageHeight}}px;"
             wx:for="{{photoArray}}" wx:for-item="x" wx:for-index="y"
             wx:key="*this"
             src="{{x}}"

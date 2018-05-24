@@ -13,6 +13,8 @@ Page({
     logged: false,
     takeSession: false,
     requestResult: '',
+    loading : false,
+    buttonText : "进入BeFounder"
   },
 
   /**
@@ -106,6 +108,9 @@ Page({
   }*/
 
   bindGetUserInfo: function (e) {
+    this.setData({
+      loading : true
+    })
     if (this.data.logged) return;
 
     util.showBusy('正在登录');
@@ -127,7 +132,14 @@ Page({
                 userInfo: userInfo,
                 logged: true
               })
-              console.log(userInfo);
+              
+
+
+              setTimeout( function(){
+                wx.redirectTo({
+                  url: '../index/index',
+                })
+              }, 2000)
             },
 
             fail: function () {
@@ -140,12 +152,14 @@ Page({
               }
               that.doLogin(options);
             },
-          });
+          })
         } else {
           util.showModel('用户未授权', e.detail.errMsg);
         }
+
       }
-    });
+    })
+
   },
 
   doLogin: function (options) {
@@ -166,6 +180,7 @@ Page({
               userInfo: options.userInfo,
               logged: true
             })
+
           },
           fail(error) {
             util.showModel('登录失败', error)

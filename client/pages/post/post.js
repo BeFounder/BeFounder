@@ -13,14 +13,22 @@ Page({
     addPhotoCheck : true,
     photoArray : [
         
-    ]
+    ],
+    imageWidth : 0,
+    imageHeight : 0,
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+    var wd = parseInt(wx.getSystemInfoSync().windowWidth / 3)
+
+    console.log(wd)
+    this.setData({
+      imageWidth : wd,
+      imageHeight : wd
+    })
   },
 
   /**
