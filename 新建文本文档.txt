@@ -1,6 +1,0 @@
-var str = "";
-for (var i = 0; i <= 24; i++)
-{
-    for (var j = 0; j <= 3; j++)
-        if (temp1[i].answerList[j].correct == "1") str = str + j
-}
