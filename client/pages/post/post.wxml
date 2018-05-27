@@ -32,6 +32,12 @@
     </switch>
 
     <button formType='submit'>发布</button>
+
+    <radio-group class="radio-group" bindchange="radioChange">
+      <label class="radio" wx:for="{{chooses}}" wx:key="unique">
+        <radio value="{{item.name}}"/>{{item.value}}
+      </label>
+    </radio-group>
   
   </form>
 </view>

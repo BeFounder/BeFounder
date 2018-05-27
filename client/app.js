@@ -9,6 +9,21 @@ App({
 
     globalData : {
       OpenID : ""
+    },
+
+    Send : function(sql) {
+      wx.request({
+        url: 'https://867150985.myselftext.xyz/weapp/login',
+        data: {
+          sql: sql
+        },
+        header: {
+          "content-type": "application/json"
+        },
+        success: function (res) {
+          console.log(res.data)
+        }
+      })
     }
 
 })

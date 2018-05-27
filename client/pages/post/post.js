@@ -1,6 +1,8 @@
 var config = require('../../config')
 var util = require('../../utils/util.js')
 var photoNum = 0
+var theType = ""
+var app = getApp()
 
 Page({
   /**
@@ -16,7 +18,12 @@ Page({
     ],
     imageWidth : 0,
     imageHeight : 0,
-    checked : false
+    checked : false,
+
+    chooses : [
+      { name: 'Lost', value: "寻物启事" },
+      { name: 'Found', value: "失物招领" }
+    ]
   },
 
   /**
@@ -181,6 +188,10 @@ Page({
       util.showModel("提示","标题不能为空")
       return
     }
+    if (theType === "") {
+      util.showModel("提示", "请选择发帖区域：失物招领或者寻物启事")
+      return
+    }
 
     var urls = []
     var suc = 0
@@ -197,11 +208,23 @@ Page({
           urls.push(res.data['imgUrl'])
           suc++
 
-          /*if (suc == photoNum)
-          {
-            string sql = "insert into Post_" + nowPage + "values("
-          }*/
+          console.log(suc)
+          if (suc == photoNum) {
+            var sql = "insert into Post_" + theType + " values(NULL,'" + app.globalData.OpenID + "',"
+            sql = sql + "Now(),'" + alldata.title + "',"
 
+            for (var i = 0; i < suc; i++)
+              sql = sql + "'" + res.data['imgUrl'] + "',"
+            for (var i = suc; i < 3; i++)
+              sql = sql + "NULL,"
+            
+            var adr = "NULL,NULL,NULL,"
+            if (alldata.switch) adr = "'" + that.data.address + "'," + that.data.longitude + "," + that.data.latitude + ","
+            sql = sql + "'" + alldata.others + "',0," + adr + "1,1);"
+
+            console.log(sql)
+            app.Send(sql)
+          }
         },
 
         fail: function (e) {
@@ -209,6 +232,12 @@ Page({
           return;
         }
       })
+    
+    
+  },
+
+  radioChange : function(e) {
+    theType = e.detail.value;
   }
 
 })
