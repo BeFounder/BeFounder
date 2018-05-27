@@ -16,6 +16,7 @@ Page({
     ],
     imageWidth : 0,
     imageHeight : 0,
+    checked : false
   },
 
   /**
@@ -24,7 +25,6 @@ Page({
   onLoad: function (options) {
     var wd = parseInt(wx.getSystemInfoSync().windowWidth / 3)
 
-    console.log(wd)
     this.setData({
       imageWidth : wd,
       imageHeight : wd
@@ -82,17 +82,23 @@ Page({
 
   Mapcheck : function(e){
 
+    var that = this
     if (e.detail.value == true)
     {
-      var x = this;
       wx.chooseLocation({
         success: function(res) {
-          x.setData({
+          that.setData({
             address : res.address,
             latitude : res.latitude,
             longitude : res.longitude
           })
         },
+
+        fail : function(e) {
+          that.setData({
+            checked : false
+          })
+        }
       })
     }
     else
@@ -127,24 +133,6 @@ Page({
           that.setData({
             photoArray: pA
           })
-
-          // 上传图片 上传要改到submit处进行 文件路径都在photoArray里
-          /*wx.uploadFile({
-            url: config.service.uploadUrl,
-            filePath: filePath,
-            name: 'file',
-
-            success: function (res) {
-              res = JSON.parse(res.data)
-              
-              console.log(res)
-            },
-
-            fail: function (e) {
-              util.showModel('上传图片失败')
-              return;
-            }
-          })*/
         }
       },
       fail: function (e) {
@@ -182,5 +170,45 @@ Page({
         }
       }
     })
+  },
+
+  submitTopic : function(e) {
+    var alldata = e.detail.value
+    var that = this
+
+    if (alldata.title === "" || alldata.title === null)
+    {
+      util.showModel("提示","标题不能为空")
+      return
+    }
+
+    var urls = []
+    var suc = 0
+
+    // 上传图片
+    for (var i = 0; i < photoNum; i++)
+      wx.uploadFile({
+        url: config.service.uploadUrl,
+        filePath: that.data.photoArray[i],
+        name: 'file',
+
+        success: function (res) {
+          res = JSON.parse(res.data)
+          urls.push(res.data['imgUrl'])
+          suc++
+
+          /*if (suc == photoNum)
+          {
+            string sql = "insert into Post_" + nowPage + "values("
+          }*/
+
+        },
+
+        fail: function (e) {
+          util.showModel('上传图片失败')
+          return;
+        }
+      })
   }
+
 })

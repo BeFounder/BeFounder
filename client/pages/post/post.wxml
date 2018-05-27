@@ -1,7 +1,7 @@
 <view class="page-body">
   <form bindsubmit='submitTopic'>
 
-    <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cells weui-cells_after-title" auto-focus>
         <input class="weui-input" name='title' placeholder="在此输入标题"/>
     </view>
     
@@ -27,11 +27,11 @@
       增加图片
     </button>
 
-    <switch bindchange='Mapcheck'>
+    <switch name='switch' bindchange='Mapcheck' checked='{{checked}}'>
       {{address}}
     </switch>
 
-    <button formType='submit'>submit</button>
+    <button formType='submit'>发布</button>
   
   </form>
 </view>

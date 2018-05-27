@@ -2,6 +2,7 @@
 var qcloud = require('../../vendor/wafer2-client-sdk/index')
 var util = require('../../utils/util.js')
 var config = require('../../config')
+var app = getApp()
 
 Page({
 
@@ -107,6 +108,26 @@ Page({
 >>>>>>> 543f5f4d4cb1f67a1c3e3cd33e6f702988a55c0c
   }*/
 
+  SaveUser : function() {
+    var userInfo = this.data.userInfo
+    var sql = "call insertNewUser("
+    sql = sql + "'" + app.globalData.OpenID + "'" + ",'" + userInfo.avatarUrl + "','" + userInfo.nickName + "');"
+
+    console.log(sql);
+    wx.request({
+      url: 'https://867150985.myselftext.xyz/weapp/login',
+      data : {
+        sql : sql
+      },
+      header : {
+        "content-type" : "application/json"
+      },
+      success : function(res){
+        console.log(res.data)
+      }
+    })
+  },
+
   bindGetUserInfo: function (e) {
     this.setData({
       loading : true
@@ -132,14 +153,13 @@ Page({
                 userInfo: userInfo,
                 logged: true
               })
-              
 
 
               setTimeout( function(){
                 wx.redirectTo({
                   url: '../index/index',
                 })
-              }, 2000)
+              }, 10)
             },
 
             fail: function () {
@@ -163,7 +183,6 @@ Page({
     wx.login({
       success: function (e) {
         if (e.code) {
-          console.log(e.code);
           wx.request({
             url: `${config.service.host}/weapp/getopenid`,
             data: {
@@ -174,7 +193,10 @@ Page({
               'content-type': 'application/json'
             },
             success: function (res) {
-              console.log(res.data);
+              
+              app.globalData.OpenID = res.data.openid
+
+              that.SaveUser()
             },
             fail: function (error) {
               console.log(error);

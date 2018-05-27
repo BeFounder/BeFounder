@@ -7,4 +7,8 @@ App({
         qcloud.setLoginUrl(config.service.loginUrl)
     },
 
+    globalData : {
+      OpenID : ""
+    }
+
 })
