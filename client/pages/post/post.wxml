@@ -1,0 +1,37 @@
+<view class="page-body">
+  <form bindsubmit='submitTopic'>
+
+    <view class="weui-cells weui-cells_after-title">
+        <input class="weui-input" name='title' placeholder="在此输入标题"/>
+    </view>
+    
+    <view class="weui-cells weui-cells_after-title" style='margin-top:5px;'>
+      <textarea name='others' placeholder='在此输入正文' />
+    </view>
+
+    <view class="section">
+        <image
+            class="photos"
+            wx:for="{{photoArray}}" wx:for-item="x" wx:for-index="y"
+            wx:key="*this"
+            src="{{x}}"
+            mode="scaleToFill"
+            data-nowurl="{{x}}"
+            data-nowid="{{y}}"
+            bindlongpress='delImage'
+            bindtap='previewImage'>
+        </image>
+    </view>
+
+    <button bindtap='uploadPhoto' wx:if="{{addPhotoCheck}}">
+      增加图片
+    </button>
+
+    <switch bindchange='Mapcheck'>
+      {{address}}
+    </switch>
+
+    <button formType='submit'>submit</button>
+  
+  </form>
+</view>
