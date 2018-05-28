@@ -6,15 +6,20 @@
  
  mysqli_query($conn,'set names utf8');
  $result = mysqli_query($conn, $sql);
+
+ $arr = array(); 
+
  if (!is_bool($result) && mysqli_num_rows($result)) {// 输出数据
  
     while($row = mysqli_fetch_assoc($result)) {
-
-        echo json_encode($row); //将请求结果转换为json格式
+        $arr[] = $row;
     }
+    
 }
-else
-    echo json_encode($sql);
+
+echo json_encode($arr,JSON_UNESCAPED_UNICODE); //将请求结果转换为json格式
+
+mysqli_close($conn);
 
 class Login extends CI_Controller {
     public function index() {
