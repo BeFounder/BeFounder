@@ -18,7 +18,7 @@ App({
           sql: sql
         },
         header: {
-          "content-type": "application/json"
+          "content-type": "application/json;charset=utf8"
         },
         success: function (res) {
           console.log(res.data)

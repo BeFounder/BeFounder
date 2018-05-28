@@ -196,6 +196,23 @@ Page({
     var urls = []
     var suc = 0
 
+    if (0 == photoNum) {
+      var sql = "insert into Post_" + theType + " values(NULL,'" + app.globalData.OpenID + "',"
+      sql = sql + "Now(),'" + alldata.title + "',"
+
+      for (var i = 0; i < suc; i++)
+        sql = sql + "'" + res.data['imgUrl'] + "',"
+      for (var i = suc; i < 3; i++)
+        sql = sql + "NULL,"
+
+      var adr = "NULL,NULL,NULL,"
+      if (alldata.switch) adr = "'" + that.data.address + "'," + that.data.longitude + "," + that.data.latitude + ","
+      sql = sql + "'" + alldata.others + "',0," + adr + "1,1);"
+
+      console.log(sql)
+      app.Send(sql)
+    }
+
     // 上传图片
     for (var i = 0; i < photoNum; i++)
       wx.uploadFile({
