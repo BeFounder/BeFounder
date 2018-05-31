@@ -1,1 +1,27 @@
 /* pages/title/title.wxss */
+@import "../../lib/weui.wxss";
+
+.request-userinfo {
+    font-size: 32rpx;
+    color: #007AFF;
+    background-color: white;
+}
+
+
+.userinfo-nickname::after {
+  border: none;
+}
+
+.userinfo-avatar {
+    width: 100rpx;
+    height: 100rpx;
+    margin: 20rpx;
+    border-radius: 100%;
+}
+
+.div1{
+  margin-top : 300px;
+}
+.div2{
+  margin-top : 100px;
+}

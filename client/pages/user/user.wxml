@@ -1,0 +1,45 @@
+<!--头像-->
+<view class="info-items">
+     <text>头像</text>
+     <view class="infotext">
+        <image class="userinfo-avatar"
+          src="{{userInfo.avatarUrl}}">
+        </image>
+     </view>
+</view>
+
+<!--用户名-->
+<view class="info-items">
+     <text>用户名</text>
+     <view class="infotext">
+        <text>{{nickname}}</text>
+     </view>
+</view>
+
+<!--性别-->
+<view class="info-items">
+     <text>性别</text>
+     <view class="infotext">
+        <text>{{sex}}</text>
+     </view>
+</view>
+
+<!--联系电话-->
+<view class="info-items" bindtap='setTel'>
+     <text>联系电话</text>
+     <view class="infotext">
+        <text>{{tel}}</text>
+     </view>
+</view>
+
+<modal hidden="{{hiddenmodalput}}" title="请输入新的联系电话" confirm-text="确定" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">  
+    <input type='text'placeholder="请输入内容"/>  
+</modal> 
+
+<!--消息-->
+<view class="info-message" bindtap='toMessage'>
+     <text>消息</text>
+     <view class="infotext">
+        <text>{{nickname}}</text>
+     </view>
+</view>

@@ -1,7 +1,7 @@
 <view class="page-body">
   <form bindsubmit='submitTopic'>
 
-    <view class="weui-cells weui-cells_after-title">
+    <view class="weui-cells weui-cells_after-title" auto-focus>
         <input class="weui-input" name='title' placeholder="在此输入标题"/>
     </view>
     
@@ -11,7 +11,7 @@
 
     <view class="section">
         <image
-            class="photos"
+            style="width:{{imageWidth}}px;height:{{imageHeight}}px;"
             wx:for="{{photoArray}}" wx:for-item="x" wx:for-index="y"
             wx:key="*this"
             src="{{x}}"
@@ -27,11 +27,17 @@
       增加图片
     </button>
 
-    <switch bindchange='Mapcheck'>
+    <switch name='switch' bindchange='Mapcheck' checked='{{checked}}'>
       {{address}}
     </switch>
 
-    <button formType='submit'>submit</button>
+    <button formType='submit'>发布</button>
+
+    <radio-group class="radio-group" bindchange="radioChange">
+      <label class="radio" wx:for="{{chooses}}" wx:key="unique">
+        <radio value="{{item.name}}"/>{{item.value}}
+      </label>
+    </radio-group>
   
   </form>
 </view>

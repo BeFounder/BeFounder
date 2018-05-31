@@ -46,5 +46,5 @@
 </view>
 
 <modal hidden="{{hiddenmodalput}}" title="请输入搜索内容" confirm-text="搜索" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">  
-    <input type='text'placeholder="请输入内容" auto-focus/>  
+    <input type='text'placeholder="请输入内容"/>  
 </modal> 

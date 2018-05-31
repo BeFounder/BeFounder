@@ -4,7 +4,8 @@
     "pages/index/index",
     "pages/addCgi/addCgi",
     "pages/post/post",
-    "pages/user/user"
+    "pages/user/user",
+    "pages/message/message"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
