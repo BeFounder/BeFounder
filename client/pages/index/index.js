@@ -4,6 +4,7 @@ Page({
     navbar: ['失物招领', '寻物启事'],
     currentTab: 0,
     hiddenmodalput: true,//搜索框初始为不可见
+    telHidden: true,//联系方式框初始为不可见
   },
   navbarTap: function (e) {
     this.setData({
@@ -49,6 +50,19 @@ Page({
     this.setData({
       hiddenmodalput: true
     })
-  }  
+  }  ,
+
+  //联系方式
+  getTel: function () {
+    this.setData({
+      telHidden: !this.data.telHidden
+    })
+  },
+  //取消按钮  
+  cancel: function () {
+    this.setData({
+      telHidden: true
+    });
+  },
 
 })

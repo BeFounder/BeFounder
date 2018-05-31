@@ -1,0 +1,51 @@
+.messageItems{
+  background: #ffffff;
+  display:flex;
+  margin: 5rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  width: 100%;
+  font-size: 35rpx;
+}
+
+.replyContext{
+  background: #ffffff;
+  margin: 5rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  width: 100%;
+  font-size: 40rpx;
+}
+
+.postContext{
+  background: #f9f9f9;
+  margin: 5rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  width: 100%;
+  font-size: 30rpx;
+  color: #9f9f9f;
+}
+
+.messageBox{
+  background: #ffffff;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  border: solid 1px #f0f0f0;
+  margin-top: 5rpx;
+  flex-direction: column;
+}
+
+.userImage{
+    display: flex;
+    align-items: center;
+    left:0;
+}
+
+.userinfo-avatar {
+    width: 50rpx;
+    height: 50rpx;
+    margin: 20rpx;
+    border-radius: 100%;
+}

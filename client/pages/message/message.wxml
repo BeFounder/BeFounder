@@ -1,0 +1,37 @@
+<!--一个回复框-->
+<view class="messageBox">
+  <!--头像和名字部分-->
+  <view class="messageItems">
+
+    <view class="userImage">
+      <image class="userinfo-avatar"
+          src="{{userInfo.avatarUrl}}">
+        </image>
+    </view>
+
+    <view class="messageItems">
+      {{replyerName}}回复你
+    </view>
+
+  </view>
+
+  <!--回复内容-->
+  <view class="messageItems">
+    <view class="replyContext">
+        {{replyContext}}回复内容测试...
+    </view>
+  </view>
+  
+  <!--帖子内容-->
+  <view class="messageItems">
+    <view class="postContext">
+      {{postContext}}帖子内容测试...
+    </view>
+  </view>
+
+  <!--回复框-->
+  <view class="messageItems">
+    <input class="postContext" type='text'placeholder="回复{{replyerName}}"/> 
+  </view>
+
+</view>

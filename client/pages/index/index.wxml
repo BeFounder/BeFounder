@@ -4,13 +4,57 @@
 </view>
 
 <!--首页-->
-<view hidden="{{currentTab!==0}}">
-  <text>因为我觉得搜索和发帖都只在失物招领和寻物启事里共有，我就把个人信息拉出来做了悬浮按钮
-  然后觉得两个悬浮按钮很丑索性把搜索也做成了悬浮按钮
-  搜索会弹出一个搜索框，根据导航页面和所搜信息检索，也就是说在失物招领页就只能搜到失物招领信息（靠后端了）
-  发帖链接到发帖页面，个人连接到个人信息页面
-  然后我不是很懂你们这个addcgi是个什么东西就没改
+<!--一个帖子框-->
+<view class="messageBox">
+  <!--头像和名字部分-->
+  <view class="messageItems">
 
+    <view class="userImage">
+      <image class="userinfo-avatar"
+          src="{{userInfo.avatarUrl}}">
+        </image>
+    </view>
+
+    <view class="messageItems">
+      {{posterName}}名字测试
+    </view>
+
+    <view class="Tel" bindtap="getTel">
+      获取联系电话
+    </view>
+  </view>
+
+  <!--帖子内容-->
+  <view class="messageItems">
+    <view class="postContext">
+        {{postContext}}帖子内容测试...
+    </view>
+  </view>
+
+  <!--地址-->
+  <view class="messageItems">
+    <image class="address" src="../pic/address.png">
+    </image>
+    <view class="mapContext">
+        {{mapContext}}地址测试...
+    </view>
+  </view>
+
+  <!--评论框-->
+  <view class="messageItems">
+    <input class="replyContext" type='text'placeholder="评论"/> 
+  </view>
+
+</view>
+
+<modal hidden="{{telHidden}}" title="联系电话"confirm-text="返回" bindconfirm="cancel" no-cancel="true">  
+    {{tel}}400-820-8820
+</modal> 
+
+<view>
+  <text>
+  帖子的正文折叠和图片、评论区、评论的展开与折叠以及删除和完结帖子的功能都还没写
+  框我是放在tabBar外面的哦，复制还有分别放到每个tabBar底下我就不管了哦，还有记得删掉这句话
   </text>
 </view>
 
