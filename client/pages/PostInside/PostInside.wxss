@@ -1,0 +1,136 @@
+@import "../../lib/weui.wxss";
+
+page{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.navbar{
+  flex: none;
+  display: flex;
+  background: #fff;
+}
+.navbar .item{
+  position: relative;
+  flex: auto;
+  text-align: center;
+  line-height: 80rpx;
+}
+.navbar .item.active{
+  color: #FFCC00;
+}
+.navbar .item.active:after{
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4rpx;
+  background: #FFCC00;
+}
+
+.share-btn 
+{ 
+width:100%; 
+color:green; 
+position:fixed; 
+bottom:0;
+right: 0;
+} 
+
+.buttom{  
+  width: 30%;
+  height: 15vw;
+  background: #fff;
+  margin-bottom: 2vw;
+} 
+
+.buttomList{  
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  bottom: 0 ;
+  width: 100%;
+} 
+
+.messageItems{
+  background: #ffffff;
+  display:flex;
+  margin: 5rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  width: 100%;
+  font-size: 33rpx;
+}
+
+.Tel{
+  background: #ffffff;
+  display:flex;
+  text-align: right;
+  color: blue;
+  font-size: 30rpx;
+  width: 300rpx;
+}
+
+.postContext{
+  background: #ffffff;
+  margin: 5rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  width: 100%;
+  font-size: 35rpx;
+}
+
+.mapContext{
+  background: #ffffff;
+  margin: 5rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  width: 100%;
+  font-size: 25rpx;
+  color:#9f9f9f;
+}
+
+.address {
+    width: 25rpx;
+    height: 30rpx;
+    margin: 5rpx;
+    margin-left: 20rpx;
+    margin-right:0rpx; 
+    border-radius: 100%;
+}
+
+.replyContext{
+  background: #f9f9f9;
+  margin: 5rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  width: 100%;
+  font-size: 30rpx;
+  color: #9f9f9f;
+}
+
+.messageBox{
+  background: #ffffff;
+  display:flex;
+  justify-content: space-between;
+  align-items: center;
+  border: solid 1px #f0f0f0;
+  margin-top: 5rpx;
+  flex-direction: column;
+  padding: 5rpx;
+}
+
+.userImage{
+    display: flex;
+    align-items: center;
+    left:0;
+}
+
+.userinfo-avatar {
+    width: 50rpx;
+    height: 50rpx;
+    margin: 20rpx;
+    border-radius: 100%;
+}

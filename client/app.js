@@ -9,7 +9,9 @@ App({
     },
 
     globalData : {
-      OpenID : ""
+      OpenID : "",
+      nowType : "Lost",
+      nowPost : {},
     },
 
     Send : function(sql) {

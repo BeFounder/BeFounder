@@ -1,13 +1,4 @@
-<!--导航条-->
-<view class="navbar">
-  <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>
-</view>
-
-<!--首页-->
-<!--一个帖子框-->
-<view class="messageBox" wx:for="{{titleArray}}" 
-    wx:key="title" wx:for-index="y"  data-noid="{{y}}"
-    bindtap='visTitle'>
+<view class="messageBox">
   <!--头像和名字部分-->
   <view class="messageItems">
 
@@ -76,43 +67,3 @@
 
 
 </view>
-
-
-<modal hidden="{{telHidden}}" title="联系方式" confirm-text="返回" bindconfirm="cancel" no-cancel="true">  
-    {{tel}}400-820-8820
-</modal> 
-
-<!--搜索-->
-<view hidden="{{currentTab!==1}}">
-  tab_02
-</view>
-
-    <!-- 上传图片测试 -->
-    <view class="uploader">
-        <navigator url="../addCgi/addCgi" open-type="navigate" class="uploader-text">
-            <text>快速增加 CGI</text>
-        </navigator>
-    </view>
-=======
-<!--我-->
-<view hidden="{{currentTab!==2}}">
-  tab_03
->>>>>>> 543f5f4d4cb1f67a1c3e3cd33e6f702988a55c0c
-
-<!--三个悬浮框-->
-</view>
-<view class='buttomList'>
-    <button class='buttom' bindtap="modalinput">
-        搜索
-    </button>
-    <button class='buttom' bindtap='toPost'>
-        发帖
-    </button>
-    <button class='buttom' bindtap='toUser'>
-        个人
-    </button>
-</view>
-
-<modal hidden="{{hiddenmodalput}}" title="请输入搜索内容" confirm-text="搜索" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">  
-    <input type='text'placeholder="请输入内容"/>  
-</modal> 

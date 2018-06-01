@@ -1,4 +1,4 @@
-var util = require('../../utils/util.js');  
+var util = require('../../utils/util.js');
 
 var app = getApp()
 Page({
@@ -83,7 +83,7 @@ Page({
     var mxID = 23333333;
     if (arr.length > 0) mxID = arr[arr.length - 1][nowType + "_identity"]
 
-    var sql = "select * from " + nowType + ",User where " + nowType + "_identity<" + mxID + " and User.OpenID=" + nowType + ".OpenID" + " ORDER BY PostTime DESC LIMIT 5;"
+    var sql = "select * from " + nowType + ",User where " + nowType + "_identity<" + mxID + " and User.OpenID=" + nowType + ".OpenID" + " ORDER BY PostTime DESC LIMIT 3;"
 
     console.log(sql)
 
@@ -119,6 +119,7 @@ Page({
       imageHeight: wd
     })
     this.CallTitle()
+    
   },
 
   previewImage: function (e) {
@@ -136,5 +137,18 @@ Page({
       urls: urls
     })
   },
+
+  visTitle : function(e) {
+    console.log(e)
+    var that = this
+    var i = e.currentTarget.dataset.noid
+
+    getApp().globalData.nowPost = this.data.titleArray[i],
+    getApp().globalData.nowType = this.data.currentTab == 0 ? "Lost" : "Found"
+
+    wx.navigateTo({
+      url: '../PostInside/PostInside',
+    })
+  }
 
 })
