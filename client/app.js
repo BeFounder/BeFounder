@@ -1,6 +1,7 @@
 //app.js
 var qcloud = require('./vendor/wafer2-client-sdk/index')
 var config = require('./config')
+var util = require('utils/util.js')
 
 App({
     onLaunch: function () {
@@ -12,18 +13,7 @@ App({
     },
 
     Send : function(sql) {
-      wx.request({
-        url: 'https://867150985.myselftext.xyz/weapp/login',
-        data: {
-          sql: sql
-        },
-        header: {
-          "content-type": "application/json;charset=utf8"
-        },
-        success: function (res) {
-          console.log(res.data)
-        }
-      })
+      util.sendSql(sql)
     }
 
 })

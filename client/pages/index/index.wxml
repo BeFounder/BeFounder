@@ -5,30 +5,57 @@
 
 <!--首页-->
 <!--一个帖子框-->
-<view class="messageBox">
+<view class="messageBox" wx:for="{{titleArray}}" wx:key="title" wx:for-index="y">
   <!--头像和名字部分-->
   <view class="messageItems">
 
     <view class="userImage">
       <image class="userinfo-avatar"
-          src="{{userInfo.avatarUrl}}">
+          src="{{item.UserPhoto}}">
         </image>
     </view>
 
     <view class="messageItems">
-      {{posterName}}名字测试
+      {{item.Nickname}}
     </view>
 
     <view class="Tel" bindtap="getTel">
-      获取联系电话
+      联系楼主
     </view>
   </view>
 
   <!--帖子内容-->
   <view class="messageItems">
-    <view class="postContext">
-        {{postContext}}帖子内容测试...
+    <view class="postContext" style='color:blue;'>
+        {{item.PostTitle}}
     </view>
+  </view>
+  
+  <view class="messageItems">
+    <view class="postContext">
+        {{item.Description}}
+    </view>
+  </view>
+
+  <view class="section">
+  <image style="width:{{imageWidth}}px;height:{{imageHeight}}px;"
+         src="{{item.Photo1}}"
+         mode="scaleToFill"
+         data-nowurl="{{item.Photo1}}" data-nowid="{{y}}"
+         bindtap='previewImage'>
+  </image>
+  <image style="width:{{imageWidth}}px;height:{{imageHeight}}px;"
+         src="{{item.Photo2}}"
+         mode="scaleToFill"
+         data-nowurl="{{item.Photo2}}" data-nowid="{{y}}"
+         bindtap='previewImage'>
+  </image>
+  <image style="width:{{imageWidth}}px;height:{{imageHeight}}px;"
+         src="{{item.Photo3}}"
+         mode="scaleToFill"
+         data-nowurl="{{item.Photo3}}" data-nowid="{{y}}"
+         bindtap='previewImage'>
+  </image>
   </view>
 
   <!--地址-->
@@ -36,27 +63,22 @@
     <image class="address" src="../pic/address.png">
     </image>
     <view class="mapContext">
-        {{mapContext}}地址测试...
+        {{item.Address}}
     </view>
   </view>
 
-  <!--评论框-->
   <view class="messageItems">
-    <input class="replyContext" type='text'placeholder="评论"/> 
+    <view class="comments">
+    </view>
   </view>
 
+
 </view>
 
-<modal hidden="{{telHidden}}" title="联系电话"confirm-text="返回" bindconfirm="cancel" no-cancel="true">  
+
+<modal hidden="{{telHidden}}" title="联系方式" confirm-text="返回" bindconfirm="cancel" no-cancel="true">  
     {{tel}}400-820-8820
 </modal> 
-
-<view>
-  <text>
-  帖子的正文折叠和图片、评论区、评论的展开与折叠以及删除和完结帖子的功能都还没写
-  框我是放在tabBar外面的哦，复制还有分别放到每个tabBar底下我就不管了哦，还有记得删掉这句话
-  </text>
-</view>
 
 <!--搜索-->
 <view hidden="{{currentTab!==1}}">

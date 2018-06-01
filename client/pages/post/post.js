@@ -231,7 +231,7 @@ Page({
             sql = sql + "Now(),'" + alldata.title + "',"
 
             for (var i = 0; i < suc; i++)
-              sql = sql + "'" + res.data['imgUrl'] + "',"
+              sql = sql + "'" + urls[i] + "',"
             for (var i = suc; i < 3; i++)
               sql = sql + "NULL,"
             
