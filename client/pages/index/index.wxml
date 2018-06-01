@@ -5,7 +5,7 @@
 
 <!--首页-->
 <!--一个帖子框-->
-<view class="messageBox" wx:for="{{titleArray}}" wx:key="title" wx:for-index="y">
+<view class="messageBox" wx:for="{{titleArray}}" wx:key="title" wx:for-index="y" bindtap='visTitle'>
   <!--头像和名字部分-->
   <view class="messageItems">
 
