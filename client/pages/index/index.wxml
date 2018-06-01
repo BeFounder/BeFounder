@@ -26,38 +26,41 @@
     </view>
   </view>
 
-  <!--帖子内容-->
+  <!--帖子标题-->
   <view class="messageItems">
     <view class="postContext" style='color:blue;'>
         {{item.PostTitle}}
     </view>
   </view>
   
+  <!--帖子正文-->
   <view class="messageItems">
     <view class="postContext">
-        {{item.Description}}
+        {{item.Description}}啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
     </view>
   </view>
 
-  <view class="section">
-  <image style="width:{{imageWidth}}px;height:{{imageHeight}}px;"
-         src="{{item.Photo1}}"
-         mode="scaleToFill"
-         data-nowurl="{{item.Photo1}}" data-nowid="{{y}}"
-         catchtap='previewImage'>
-  </image>
-  <image style="width:{{imageWidth}}px;height:{{imageHeight}}px;"
-         src="{{item.Photo2}}"
-         mode="scaleToFill"
-         data-nowurl="{{item.Photo2}}" data-nowid="{{y}}"
-         catchtap='previewImage'>
-  </image>
-  <image style="width:{{imageWidth}}px;height:{{imageHeight}}px;"
-         src="{{item.Photo3}}"
-         mode="scaleToFill"
-         data-nowurl="{{item.Photo3}}" data-nowid="{{y}}"
-         catchtap='previewImage'>
-  </image>
+  <view class="messageItems">
+    <view class="ImageBox">
+    <image class="postImage"
+          src="{{item.Photo1}}"
+          mode="scaleToFill"
+          data-nowurl="{{item.Photo1}}" data-nowid="{{y}}"
+          catchtap='previewImage'>
+    </image>
+    <image class="postImage"
+          src="{{item.Photo2}}"
+          mode="scaleToFill"
+          data-nowurl="{{item.Photo2}}" data-nowid="{{y}}"
+          catchtap='previewImage'>
+    </image>
+    <image class="postImage"
+          src="{{item.Photo3}}"
+          mode="scaleToFill"
+          data-nowurl="{{item.Photo3}}" data-nowid="{{y}}"
+          catchtap='previewImage'>
+    </image>
+    </view>
   </view>
 
   <!--地址-->
@@ -66,11 +69,6 @@
     </image>
     <view class="mapContext">
         {{item.Address}}
-    </view>
-  </view>
-
-  <view class="messageItems">
-    <view class="comments">
     </view>
   </view>
 

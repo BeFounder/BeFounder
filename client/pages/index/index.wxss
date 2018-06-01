@@ -57,9 +57,7 @@ right: 0;
 .messageItems{
   background: #ffffff;
   display:flex;
-  margin: 5rpx;
-  margin-left: 20rpx;
-  margin-right: 20rpx;
+  margin-top: 5rpx;
   width: 100%;
   font-size: 33rpx;
 }
@@ -75,7 +73,6 @@ right: 0;
 
 .postContext{
   background: #ffffff;
-  margin: 5rpx;
   margin-left: 20rpx;
   margin-right: 20rpx;
   width: 100%;
@@ -90,6 +87,7 @@ right: 0;
   width: 100%;
   font-size: 25rpx;
   color:#9f9f9f;
+  display: flex;
 }
 
 .address {
@@ -99,6 +97,7 @@ right: 0;
     margin-left: 20rpx;
     margin-right:0rpx; 
     border-radius: 100%;
+    display: flex;
 }
 
 .replyContext{
@@ -109,15 +108,15 @@ right: 0;
   width: 100%;
   font-size: 30rpx;
   color: #9f9f9f;
+  display: flex;
 }
 
 .messageBox{
   background: #ffffff;
-  display:flex;
   justify-content: space-between;
   align-items: center;
   border: solid 1px #f0f0f0;
-  margin-top: 5rpx;
+  margin-top: 10rpx;
   flex-direction: column;
   padding: 5rpx;
 }
@@ -133,4 +132,17 @@ right: 0;
     height: 50rpx;
     margin: 20rpx;
     border-radius: 100%;
+}
+
+.postImage{
+    width: 215rpx;
+    height: 215rpx;
+    margin:5px;
+}
+
+.ImageBox{
+  background: #ffffff;
+  margin: 5rpx;
+  width: 100%;
+  font-size: 33rpx;
 }
