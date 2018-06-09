@@ -35,26 +35,29 @@
   
   <!--帖子正文-->
   <view class="messageItems">
-    <view class="postContext">
-        {{item.Description}}啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊
-    </view>
+    <text class="postContext" decode='{{true}}' style="margin-top:0px">
+        {{item.Description}}
+    </text>
   </view>
 
   <view class="messageItems">
     <view class="ImageBox">
     <image class="postImage"
+          wx:if="{{item.Photo1}}"
           src="{{item.Photo1}}"
           mode="scaleToFill"
           data-nowurl="{{item.Photo1}}" data-nowid="{{y}}"
           catchtap='previewImage'>
     </image>
     <image class="postImage"
+          wx:if="{{item.Photo2}}"
           src="{{item.Photo2}}"
           mode="scaleToFill"
           data-nowurl="{{item.Photo2}}" data-nowid="{{y}}"
           catchtap='previewImage'>
     </image>
     <image class="postImage"
+          wx:if="{{item.Photo3}}"
           src="{{item.Photo3}}"
           mode="scaleToFill"
           data-nowurl="{{item.Photo3}}" data-nowid="{{y}}"
@@ -64,7 +67,7 @@
   </view>
 
   <!--地址-->
-  <view class="messageItems">
+  <view class="messageItems" wx:if="{{item.Address}}">
     <image class="address" src="../pic/address.png">
     </image>
     <view class="mapContext">
@@ -81,24 +84,7 @@
 </modal> 
 
 <!--搜索-->
-<view hidden="{{currentTab!==1}}">
-  tab_02
-</view>
 
-    <!-- 上传图片测试 -->
-    <view class="uploader">
-        <navigator url="../addCgi/addCgi" open-type="navigate" class="uploader-text">
-            <text>快速增加 CGI</text>
-        </navigator>
-    </view>
-=======
-<!--我-->
-<view hidden="{{currentTab!==2}}">
-  tab_03
->>>>>>> 543f5f4d4cb1f67a1c3e3cd33e6f702988a55c0c
-
-<!--三个悬浮框-->
-</view>
 <view class='buttomList'>
     <button class='buttom' bindtap="modalinput">
         搜索

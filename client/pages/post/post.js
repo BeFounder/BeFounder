@@ -23,7 +23,7 @@ Page({
     chooses : [
       { name: 'Lost', value: "寻物启事" },
       { name: 'Found', value: "失物招领" }
-    ]
+    ],
   },
 
   /**
@@ -180,75 +180,100 @@ Page({
   },
 
   submitTopic : function(e) {
+
     var alldata = e.detail.value
     var that = this
 
-    if (alldata.title === "" || alldata.title === null)
-    {
-      util.showModel("提示","标题不能为空")
-      return
-    }
-    if (theType === "") {
-      util.showModel("提示", "请选择发帖区域：失物招领或者寻物启事")
-      return
-    }
+    wx.showModal({
+      title: '提示',
+      content: '是否确认发布这条帖子？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
 
-    var urls = []
-    var suc = 0
+          var fl = 0;
+          for (var i = 0; i < alldata.title.length; i++)
+            if (alldata.title[i] != ' ') fl = 1;
+          if (alldata.title === "" || alldata.title === null || fl == 0) {
+            util.showModel("提示", '标题不能为空')
+            return
+          }
+          if (theType === "") {
+            util.showModel("提示", "请选择发帖区域：失物招领或者寻物启事")
+            return
+          }
 
-    if (0 == photoNum) {
-      var sql = "insert into Post_" + theType + " values(NULL,'" + app.globalData.OpenID + "',"
-      sql = sql + "Now(),'" + alldata.title + "',"
+          var urls = []
+          var suc = 0
 
-      for (var i = 0; i < suc; i++)
-        sql = sql + "'" + res.data['imgUrl'] + "',"
-      for (var i = suc; i < 3; i++)
-        sql = sql + "NULL,"
-
-      var adr = "NULL,NULL,NULL,"
-      if (alldata.switch) adr = "'" + that.data.address + "'," + that.data.longitude + "," + that.data.latitude + ","
-      sql = sql + "'" + alldata.others + "',0," + adr + "1,1);"
-
-      console.log(sql)
-      app.Send(sql)
-    }
-
-    // 上传图片
-    for (var i = 0; i < photoNum; i++)
-      wx.uploadFile({
-        url: config.service.uploadUrl,
-        filePath: that.data.photoArray[i],
-        name: 'file',
-
-        success: function (res) {
-          res = JSON.parse(res.data)
-          urls.push(res.data['imgUrl'])
-          suc++
-
-          console.log(suc)
-          if (suc == photoNum) {
+          if (0 == photoNum) {
             var sql = "insert into Post_" + theType + " values(NULL,'" + app.globalData.OpenID + "',"
             sql = sql + "Now(),'" + alldata.title + "',"
 
             for (var i = 0; i < suc; i++)
-              sql = sql + "'" + urls[i] + "',"
+              sql = sql + "'" + res.data['imgUrl'] + "',"
             for (var i = suc; i < 3; i++)
               sql = sql + "NULL,"
-            
+
             var adr = "NULL,NULL,NULL,"
             if (alldata.switch) adr = "'" + that.data.address + "'," + that.data.longitude + "," + that.data.latitude + ","
             sql = sql + "'" + alldata.others + "',0," + adr + "1,1);"
 
             console.log(sql)
             app.Send(sql)
+            
+            wx.navigateBack()
+            util.showSuccess('发表成功！')
           }
-        },
 
-        fail: function (e) {
-          util.showModel('上传图片失败')
-          return;
+          // 上传图片
+          for (var i = 0; i < photoNum; i++)
+            wx.uploadFile({
+              url: config.service.uploadUrl,
+              filePath: that.data.photoArray[i],
+              name: 'file',
+
+              success: function (res) {
+                res = JSON.parse(res.data)
+                urls.push(res.data['imgUrl'])
+                suc++
+
+                console.log(suc)
+                if (suc == photoNum) {
+                  var sql = "insert into Post_" + theType + " values(NULL,'" + app.globalData.OpenID + "',"
+                  sql = sql + "Now(),'" + alldata.title + "',"
+
+                  for (var i = 0; i < suc; i++)
+                    sql = sql + "'" + urls[i] + "',"
+                  for (var i = suc; i < 3; i++)
+                    sql = sql + "NULL,"
+
+                  var adr = "NULL,NULL,NULL,"
+                  if (alldata.switch) adr = "'" + that.data.address + "'," + that.data.longitude + "," + that.data.latitude + ","
+                  sql = sql + "'" + alldata.others + "',0," + adr + "1,1);"
+
+                  sql = sql.split('&hc').join('\n');
+                  console.log(sql)
+                  app.Send(sql)
+
+                  wx.navigateBack()
+                  util.showSuccess('发表成功！')
+                }
+              },
+
+              fail: function (e) {
+                util.showModel('上传图片失败')
+                return;
+              }
+            })
+
+        } else {
+          console.log('用户点击取消')
+          return
         }
-      })
+      }
+    })
+
     
     
   },

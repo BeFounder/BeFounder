@@ -12,6 +12,7 @@ App({
       OpenID : "",
       nowType : "Lost",
       nowPost : {},
+      userInfo : {},
     },
 
     Send : function(sql) {

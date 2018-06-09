@@ -5,13 +5,35 @@ Page({
    */
   data: {
     hiddenmodalput:true,
+    userInfo : {},
+    conne : ""
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    
+
+    var that = this
+    var sql = "Select * from User where OpenID = '" + getApp().globalData.OpenID + "'"
+
+
+    console.log(sql)
+    wx.request({
+      url: 'https://867150985.myselftext.xyz/weapp/login',
+      data: {
+        sql: sql
+      },
+      header: {
+        "content-type": "application/json;charset=utf8"
+      },
+      success: function (res) {
+        that.setData({
+          userInfo: res.data[0]
+        })
+      }
+    })
+
   },
 
   /**
@@ -80,11 +102,26 @@ Page({
     this.setData({
       hiddenmodalput: true
     })
+
+    console.log(this.data.Connection)
+
+    var sql = "update User set Connection = '" + this.data.conne + "' where OpenID = '" + this.data.userInfo["OpenID"] + "'"
+
+    console.log(sql)
+
+    getApp().Send(sql)
+    this.onLoad()
   },  
 
   toMessage: function (event) {
     wx.navigateTo({
       url: '../message/message',
+    })
+  },
+
+  ConnectionInput: function (e) {
+    this.setData({
+      conne : e.detail.value
     })
   },
 })

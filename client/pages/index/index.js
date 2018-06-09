@@ -71,7 +71,8 @@ Page({
   //取消按钮  
   cancel: function () {
     this.setData({
-      telHidden: true
+      telHidden: true,
+      hiddenmodalput: true
     });
   },
 
@@ -99,7 +100,9 @@ Page({
       },
       success: function (res) {
         for (var i = 0; i < res.data.length; i++)
+        {
           arr.push(res.data[i])
+        }
 
         console.log(arr)
 
@@ -149,6 +152,19 @@ Page({
     wx.navigateTo({
       url: '../PostInside/PostInside',
     })
+  },
+
+  onReachBottom : function() {
+    this.CallTitle();
+  },
+
+  onPullDownRefresh : function() {
+    this.setData({
+      titleArray : []
+    })
+
+    this.CallTitle();
   }
+  
 
 })

@@ -113,7 +113,9 @@ Page({
     var sql = "call insertNewUser("
     sql = sql + "'" + app.globalData.OpenID + "'" + ",'" + userInfo.avatarUrl + "','" + userInfo.nickName + "');"
 
+    app.globalData.userInfo = userInfo
     app.Send(sql)
+
   },
 
   bindGetUserInfo: function (e) {
