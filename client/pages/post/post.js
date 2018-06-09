@@ -206,6 +206,9 @@ Page({
           var urls = []
           var suc = 0
 
+          var sql1 = "update User set " + theType + "_Post_num=" + theType + "_Post_num+1 where OpenID = '" + getApp().globalData.OpenID + "'";
+          getApp().Send(sql1)
+
           if (0 == photoNum) {
             var sql = "insert into Post_" + theType + " values(NULL,'" + app.globalData.OpenID + "',"
             sql = sql + "Now(),'" + alldata.title + "',"
@@ -219,7 +222,6 @@ Page({
             if (alldata.switch) adr = "'" + that.data.address + "'," + that.data.longitude + "," + that.data.latitude + ","
             sql = sql + "'" + alldata.others + "',0," + adr + "1,1);"
 
-            console.log(sql)
             app.Send(sql)
             
             wx.navigateBack()

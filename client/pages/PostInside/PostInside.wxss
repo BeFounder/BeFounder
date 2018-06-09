@@ -134,3 +134,22 @@ right: 0;
     margin: 20rpx;
     border-radius: 100%;
 }
+
+.comment {
+  border-radius: 10px;
+  width : 75%;
+  bottom : 5px;
+  left : 5px;
+  border: 1px solid blue;
+  background-color: white;
+  position:fixed;
+}
+
+.cbutton {
+  width : 20%;
+  bottom : 5px;
+  right : 5px;
+  position: fixed;
+  background-color :aqua;
+  color : black;
+}

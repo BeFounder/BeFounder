@@ -84,7 +84,7 @@ Page({
     var mxID = 23333333;
     if (arr.length > 0) mxID = arr[arr.length - 1][nowType + "_identity"]
 
-    var sql = "select * from " + nowType + ",User where " + nowType + "_identity<" + mxID + " and User.OpenID=" + nowType + ".OpenID" + " ORDER BY PostTime DESC LIMIT 3;"
+    var sql = "select * from " + nowType + ",User where " + nowType + "_identity<" + mxID + " and User.OpenID=" + nowType + ".OpenID" + " ORDER BY PostTime DESC LIMIT 5;"
 
     console.log(sql)
 

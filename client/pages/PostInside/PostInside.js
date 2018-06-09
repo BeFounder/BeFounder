@@ -9,6 +9,8 @@ Page({
 
     imageWidth: 0,
     imageHeight: 0,
+    comment : "",
+    commentsArray : [],
   },
 
   /**
@@ -75,5 +77,15 @@ Page({
    */
   onShareAppMessage: function () {
   
+  },
+
+  CommentInput : function(e){
+    this.setData({
+      comment : e.detail.value
+    })
+  },
+
+  CommentAdd : function(){
+
   }
 })
