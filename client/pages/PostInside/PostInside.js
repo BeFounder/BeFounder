@@ -11,6 +11,7 @@ Page({
     imageHeight: 0,
     comment : "",
     commentsArray : [],
+    telHidden : true,
   },
 
   /**
@@ -27,6 +28,26 @@ Page({
     
     this.setData({
       item : getApp().globalData.nowPost
+    })
+
+    var nT = getApp().globalData.nowType
+    var sql = "select * from " + nT + "Comments,User where Post_" + nT + "_identity =" + this.data.item["Post_" + nT + "_identity"] + " and User.OpenID=" + nT + "Comments.OpenID"
+
+    var that = this
+
+    wx.request({
+      url: 'https://867150985.myselftext.xyz/weapp/login',
+      data: {
+        sql: sql
+      },
+      header: {
+        "content-type": "application/json;charset=utf8"
+      },
+      success: function (res) {
+        that.setData({
+          commentsArray : res.data
+        })
+      }
     })
   },
 
@@ -86,6 +107,69 @@ Page({
   },
 
   CommentAdd : function(){
+    console.log(this.data.comment)
 
-  }
+    var app = getApp();
+
+    var nowType = app.globalData.nowType;
+    var sql = "insert into " + nowType + "Comments values(NULL," + this.data.item["Post_Lost_identity"] + ",'" + app.globalData.OpenID + "','" + this.data.comment + "',Now())"
+
+    app.Send(sql)
+
+    var sql1 = "update User set " + nowType + "Comments_num=" + nowType + "Comments_num+1 where OpenID='" + app.globalData.OpenID + "'"
+
+    app.Send(sql1)
+
+    this.onLoad();
+  },
+
+  previewImage: function (e) {
+
+    var that = this
+    var current = e.target.dataset.nowurl
+    if (current == null) return
+    var i = e.target.dataset.nowid
+
+    var urls = [];
+    for (var k = 1; k <= 3; k++)
+      if (that.data.item["Photo" + k] != null) urls.push(that.data.item["Photo" + k])
+
+    wx.previewImage({
+      current: current,
+      urls: urls
+    })
+  },
+
+  cancel : function(){
+    this.setData({
+      telHidden : true
+    })
+  },
+
+  getTel: function (e) {
+    var that = this
+    var ii = e.currentTarget.dataset.ii
+    console.log(e)
+
+    var sql = "select Connection from User where OpenID='" + ii + "'"
+
+    wx.request({
+      url: 'https://867150985.myselftext.xyz/weapp/login',
+      data: {
+        sql: sql
+      },
+      header: {
+        "content-type": "application/json;charset=utf8"
+      },
+      success: function (res) {
+        that.setData({
+          tel: res.data[0]["Connection"]
+        })
+
+        that.setData({
+          telHidden: false
+        })
+      }
+    })
+  },
 })

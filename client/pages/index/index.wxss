@@ -77,6 +77,7 @@ right: 0;
   margin-right: 20rpx;
   width: 100%;
   font-size: 35rpx;
+  word-break: break-all;
 }
 
 .mapContext{

@@ -12,6 +12,7 @@ Page({
     ], 
     imageWidth: 0,
     imageHeight: 0,
+    tel : "",
   },
   navbarTap: function (e) {
     this.setData({
@@ -62,18 +63,39 @@ Page({
     })
   }  ,
 
-  //联系方式
-  getTel: function () {
-    this.setData({
-      telHidden: !this.data.telHidden
-    })
-  },
   //取消按钮  
   cancel: function () {
     this.setData({
       telHidden: true,
       hiddenmodalput: true
     });
+  },
+
+  getTel : function(e){
+    var that = this
+    var ii = e.currentTarget.dataset.ii
+    console.log(e)
+
+    var sql = "select Connection from User where OpenID='" + ii + "'"
+
+    wx.request({
+      url: 'https://867150985.myselftext.xyz/weapp/login',
+      data: {
+        sql: sql
+      },
+      header: {
+        "content-type": "application/json;charset=utf8"
+      },
+      success: function (res) {
+        that.setData({
+          tel : res.data[0]["Connection"]
+        })
+
+        that.setData({
+          telHidden: false
+        })
+      }
+    })
   },
 
 
