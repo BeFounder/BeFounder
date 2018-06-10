@@ -21,17 +21,3 @@
 <modal hidden="{{hiddenmodalput}}" title="请输入新的联系方式" confirm-text="确定" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">  
     <input type='text' placeholder="请输入内容" bindinput='ConnectionInput'/>  
 </modal> 
-
-<!--消息-->
-<view class="info-message" bindtap='toMessage'>
-     <text>消息</text>
-     <view class="infotext">
-        <text>{{nickname}}</text>
-     </view>
-</view>
-<view class="info-message" bindtap='toMessage'>
-     <text>我的帖子</text>
-     <view class="infotext">
-        <text>{{nickname}}</text>
-     </view>
-</view>

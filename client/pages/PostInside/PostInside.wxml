@@ -8,7 +8,7 @@
         </image>
     </view>
 
-    <view class="messageItems">
+    <view class="messageItems" style="font-size:20px">
       {{item.Nickname}}
     </view>
 
@@ -105,7 +105,7 @@
 <view class="tabCom">
 
     <view class="comment">
-        <textarea bindinput='CommentInput' class="weui-input" 
+        <input bindinput='CommentInput' value="{{comment}}" class="weui-input" 
         name='title' placeholder="在此评论"/>
     </view>
     <button class="cbutton" bindtap='CommentAdd'>评论</button>

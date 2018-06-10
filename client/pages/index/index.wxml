@@ -85,22 +85,15 @@
 
 <!--搜索-->
 
-<view class='buttomList'>
-    <button class='buttom' bindtap="modalinput">
-        搜索
-    </button>
-    <button class='buttom' bindtap='toPost'>
-        发帖
-    </button>
-    <button class='buttom' bindtap='toUser'>
-        个人
-    </button>
-</view>
 
 <modal hidden="{{hiddenmodalput}}" title="请输入搜索内容" confirm-text="搜索" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">  
-    <input type='text'placeholder="请输入内容"/>  
+    <input type='text' bindinput="search" placeholder="请输入内容"/>  
 </modal> 
 
-<view style="height:100px; bottom:0">
-  <text>\n\n</text>
-</view>
+
+<view>  
+  <image src="../pic/doc.png" class="img-style" animation="{{animCollect}}" bindtap="toPost"></image>  
+  <image src="../pic/my.png" class="img-style" animation="{{animTranspond}}" bindtap="toUser"></image>  
+  <image src="../pic/search.png" class="img-style" animation="{{animInput}}" bindtap="modalinput"></image>  
+  <image src="../pic/plus.png" class="img-plus-style" animation="{{animPlus}}" bindtap="plus"></image>  
+</view>  

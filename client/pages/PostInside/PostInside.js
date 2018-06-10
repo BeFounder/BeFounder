@@ -1,4 +1,6 @@
 // pages/PostInside/PostInside.js
+var util = require('../../utils/util.js');
+
 Page({
 
   /**
@@ -83,7 +85,7 @@ Page({
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
-  
+    this.onLoad()
   },
 
   /**
@@ -111,6 +113,14 @@ Page({
 
     var app = getApp();
 
+    var fl = 0;
+    for (var i = 0; i < this.data.comment.length; i++)
+      if (this.data.comment[i] != ' ') fl = 1;
+    if (this.data.comment === "" || this.data.comment === null || fl == 0) {
+      util.showModel("提示", '内容不能为空')
+      return
+    }
+
     var nowType = app.globalData.nowType;
     var sql = "insert into " + nowType + "Comments values(NULL," + this.data.item["Post_Lost_identity"] + ",'" + app.globalData.OpenID + "','" + this.data.comment + "',Now())"
 
@@ -121,6 +131,10 @@ Page({
     app.Send(sql1)
 
     this.onLoad();
+
+    this.setData({
+      comment : ""
+    })
   },
 
   previewImage: function (e) {

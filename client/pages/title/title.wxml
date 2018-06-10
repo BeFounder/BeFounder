@@ -1,23 +1,12 @@
-<view class="container">
-  <text>中间需要一个Logo 本页面加一个背景色（我建议蓝色比较好）
-   登录放在中间靠下方的位置 懂8 @前端组</text>
+<view class="container" style="background-image:url('https://photos-1256356305.cos.ap-beijing.myqcloud.com/bg.png'); height:100%;background-size:100% 100%;">
 
-  <view class="div1" wx:if="{{!logged}}">
+  <view class="div1">
   </view>
-  <view class="div2" wx:if="{{logged}}">
-  </view>
-  <block class="request-userinfo" wx:if="{{logged}}">
-    <image class="userinfo-avatar"
-          src="{{userInfo.avatarUrl}}">
-    </image>
-    <text>{{userInfo.nickName}}</text>
-  </block>
 
-  <view style='height:100px;' wx:if='{{logged}}'>
-  </view>
 
   <!--也许不用为登录专门做一个界面？游客就可以浏览信息，在点击发帖或者点进个人信息那里再要求登录  -->
   <button class="request-userinfo" open-type="getUserInfo"  bindgetuserinfo="bindGetUserInfo" loading='{{loading}}'>{{buttonText}}</button>
   
 <!--如果用户是新用户，第一次登录会自动弹出请求授权窗口，无需我们实现  -->
 </view>
+
