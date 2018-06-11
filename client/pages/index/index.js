@@ -372,6 +372,7 @@ Page({
     })
 
     this.CallTitle();
+    wx.stopPullDownRefresh();
   }
   
 

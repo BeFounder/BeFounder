@@ -122,8 +122,9 @@ Page({
     }
 
     var nowType = app.globalData.nowType;
-    var sql = "insert into " + nowType + "Comments values(NULL," + this.data.item["Post_Lost_identity"] + ",'" + app.globalData.OpenID + "','" + this.data.comment + "',Now())"
+    var sql = "insert into " + nowType + "Comments values(NULL," + this.data.item["Post_" + nowType + "_identity"] + ",'" + app.globalData.OpenID + "','" + this.data.comment + "',Now())"
 
+    console.log(sql)
     app.Send(sql)
 
     var sql1 = "update User set " + nowType + "Comments_num=" + nowType + "Comments_num+1 where OpenID='" + app.globalData.OpenID + "'"
