@@ -21,7 +21,7 @@
       {{item.Nickname}}
     </view>
 
-    <view class="Tel" catchtap="getTel" data-ii="{{item.OpenID}}">
+    <view class="Tel" catchtap="getTel" data-ii="{{item.OpenID}}" data-nid="{{y}}">
       联系楼主
     </view>
   </view>

@@ -292,7 +292,7 @@ Page({
     var mxID = 23333333;
     if (arr.length > 0) mxID = arr[arr.length - 1][nowType + "_identity"]
 
-    var sql = "select * from " + nowType + ",User where " + nowType + "_identity<" + mxID + " and User.OpenID=" + nowType + ".OpenID" + " ORDER BY PostTime DESC LIMIT 5;"
+    var sql = "select * from " + nowType + ",User where " + nowType + "_identity<" + mxID + " and User.OpenID=" + nowType + ".OpenID and StatusCompleted=1" + " ORDER BY PostTime DESC LIMIT 5;"
 
     console.log(sql)
 
@@ -373,6 +373,35 @@ Page({
 
     this.CallTitle();
     wx.stopPullDownRefresh();
+  },
+
+  CompleteTitle : function(e) {
+
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '该帖子将被标记为完结，是否确认？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log(e)
+          var i = e.currentTarget.dataset.nid
+
+          var nowType = "Post_" + (that.data.currentTab == 0 ? "Lost" : "Found")
+          var sql = "update " + nowType + " set StatusCompleted=0 where " + nowType + "_identity=" + that.data.titleArray[i][nowType + "_identity"]
+
+          app.Send(sql)
+
+          util.showSuccess("成功")
+
+          that.setData({
+            titleArray : []
+          })
+          that.CallTitle()
+        }
+      }
+    })
+
+    
   }
   
 

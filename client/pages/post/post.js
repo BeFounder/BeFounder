@@ -24,6 +24,7 @@ Page({
       { name: 'Lost', value: "寻物启事" },
       { name: 'Found', value: "失物招领" }
     ],
+    tel : "",
   },
 
   /**
@@ -35,6 +36,24 @@ Page({
     this.setData({
       imageWidth : wd,
       imageHeight : wd
+    })
+
+
+    var sql = "select Connection from User where OpenID='" + getApp().globalData.OpenID + "'"
+
+    wx.request({
+      url: 'https://867150985.myselftext.xyz/weapp/login',
+      data: {
+        sql: sql
+      },
+      header: {
+        "content-type": "application/json;charset=utf8"
+      },
+      success: function (res) {
+        that.setData({
+          tel: res.data[0]["Connection"]
+        })
+      }
     })
   },
 
@@ -200,6 +219,11 @@ Page({
           }
           if (theType === "") {
             util.showModel("提示", "请选择发帖区域：失物招领或者寻物启事")
+            return
+          }
+          if (that.data.tel == null || that.data.tel == "")
+          {
+            util.showModel("提示","未填写联系方式，请先前往个人页面填写联系方式")
             return
           }
 
