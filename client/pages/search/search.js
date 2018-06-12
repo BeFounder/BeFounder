@@ -12,8 +12,9 @@ Page({
     imageWidth: 0,
     imageHeight: 0,
     comment: "",
-    commentsArray: [],
+    titleArray: [],
     telHidden: true,
+    notfind : true,
   },
 
   /**
@@ -21,33 +22,60 @@ Page({
    */
   onLoad: function (options) {
 
-    var wd = parseInt(wx.getSystemInfoSync().windowWidth / 3) - 2
-
-    this.setData({
-      imageWidth: wd,
-      imageHeight: wd
-    })
-
-    this.setData({
-      item: getApp().globalData.nowPost
-    })
-
-    var nT = getApp().globalData.nowType
-    var sql = "select * from " + nT + "Comments,User where Post_" + nT + "_identity =" + this.data.item["Post_" + nT + "_identity"] + " and User.OpenID=" + nT + "Comments.OpenID"
-
     var that = this
+    var ss = options.find.split(" ");
+    var str = "("
+    for (var i = 0; i < ss.length; i++)
+      str = str + "PostTitle like '%" + ss[i] + "%' and "
+    str = str + "true) or ("
+    for (var i = 0; i < ss.length; i++)
+      str = str + "Description like '%" + ss[i] + "%' and "
+    str = str + "true)"
 
+    var arr = []
+    var sql1 = "select * from Post_Lost,User where User.OpenID=Post_Lost.OpenID and (" + str + ")"
+    var sql2 = "select * from Post_Found,User where User.OpenID=Post_Found.OpenID and (" + str + ")"
+
+    console.log(sql1)
     wx.request({
       url: 'https://867150985.myselftext.xyz/weapp/login',
       data: {
-        sql: sql
+        sql: sql1
       },
       header: {
         "content-type": "application/json;charset=utf8"
       },
       success: function (res) {
-        that.setData({
-          commentsArray: res.data
+        for (var i = 0; i < res.data.length; i++)
+        {
+          res.data[i]["type"] = "失物招领"
+          arr.push(res.data[i])
+        }
+
+        wx.request({
+          url: 'https://867150985.myselftext.xyz/weapp/login',
+          data: {
+            sql: sql2
+          },
+          header: {
+            "content-type": "application/json;charset=utf8"
+          },
+          success: function (res) {
+            for (var i = 0; i < res.data.length; i++) {
+              res.data[i]["type"] = "寻物启事"
+              arr.push(res.data[i])
+            }
+
+            arr.sort(function(a,b){
+              if (a["PostTime"] < b["PostTime"]) return 1;
+              if (a["PostTime"] > b["PostTime"]) return -1;
+              return 0;
+            })
+
+            that.setData({
+              titleArray : arr
+            })
+          }
         })
       }
     })
@@ -102,64 +130,7 @@ Page({
 
   },
 
-  CommentInput: function (e) {
-    this.setData({
-      comment: e.detail.value
-    })
-  },
-
-  CommentAdd: function () {
-    console.log(this.data.comment)
-
-    var app = getApp();
-
-    var fl = 0;
-    for (var i = 0; i < this.data.comment.length; i++)
-      if (this.data.comment[i] != ' ') fl = 1;
-    if (this.data.comment === "" || this.data.comment === null || fl == 0) {
-      util.showModel("提示", '内容不能为空')
-      return
-    }
-
-    var nowType = app.globalData.nowType;
-    var sql = "insert into " + nowType + "Comments values(NULL," + this.data.item["Post_" + nowType + "_identity"] + ",'" + app.globalData.OpenID + "','" + this.data.comment + "',Now())"
-
-    console.log(sql)
-    app.Send(sql)
-
-    var sql1 = "update User set " + nowType + "Comments_num=" + nowType + "Comments_num+1 where OpenID='" + app.globalData.OpenID + "'"
-
-    app.Send(sql1)
-
-    this.onLoad();
-
-    this.setData({
-      comment: ""
-    })
-  },
-
-  previewImage: function (e) {
-
-    var that = this
-    var current = e.target.dataset.nowurl
-    if (current == null) return
-    var i = e.target.dataset.nowid
-
-    var urls = [];
-    for (var k = 1; k <= 3; k++)
-      if (that.data.item["Photo" + k] != null) urls.push(that.data.item["Photo" + k])
-
-    wx.previewImage({
-      current: current,
-      urls: urls
-    })
-  },
-
-  cancel: function () {
-    this.setData({
-      telHidden: true
-    })
-  },
+  
 
   getTel: function (e) {
     var that = this
@@ -185,6 +156,35 @@ Page({
           telHidden: false
         })
       }
+    })
+  },
+
+  visTitle: function (e) {
+    console.log(e)
+    var that = this
+    var i = e.currentTarget.dataset.noid
+
+    getApp().globalData.nowPost = this.data.titleArray[i]
+    getApp().globalData.nowType = this.data.titleArray[i]["type"] == "失物招领" ? "Lost" : "Found"
+
+    wx.navigateTo({
+      url: '../PostInside/PostInside',
+    })
+  },
+
+  previewImage: function (e) {
+    var that = this
+    var current = e.target.dataset.nowurl
+    if (current == null) return
+    var i = e.target.dataset.nowid
+
+    var urls = [];
+    for (var k = 1; k <= 3; k++)
+      if (that.data.titleArray[i]["Photo" + k] != null) urls.push(that.data.titleArray[i]["Photo" + k])
+
+    wx.previewImage({
+      current: current,
+      urls: urls
     })
   },
 })

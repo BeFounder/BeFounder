@@ -1,5 +1,7 @@
-<!--一个回复框-->
-<view class="messageBox">
+<!--pages/search/search.wxml-->
+<view class="messageBox {{item.StatusCompleted==1 ? 'unLock' : 'Lock'}}" wx:for="{{titleArray}}"
+  wx:key="title" wx:for-index="y"  data-noid="{{y}}"
+    bindtap='visTitle'>
   <!--头像和名字部分-->
   <view class="messageItems">
 
@@ -9,24 +11,73 @@
         </image>
     </view>
 
-    <view class="messageItems">
-      {{item.Nickname}}回复你
+    <view class="headBox">
+      <view class="messageItems"  style='font-size:35rpx'>
+        {{item.Nickname}}
+      </view>
+      <view class="messageItems" style='font-size:20rpx'>
+        {{item.PostTime}}
+      </view>
     </view>
 
+    <!--失物招领/寻物启事-->
+    <view class="Tel">
+      {{item.type}}
+    </view>
   </view>
 
-  <!--回复内容-->
+  <!--帖子标题-->
   <view class="messageItems">
-    <view class="replyContext">
-        {{item.Text}}回复内容测试...
+    <view class="postContext" style='color:blue;'>
+        {{item.PostTitle}}test
     </view>
   </view>
   
-  <!--帖子内容-->
-  <view class="messageItems" style='color:blue'>
-    <view class="postContext">
-      在你的帖子:{{item.PostTitle}}
+  <!--帖子正文-->
+  <view class="messageItems">
+    <text class="postContext" decode='{{true}}' style="margin-top:0px">
+        {{item.Description}}
+    </text>
+  </view>
+
+  <view class="messageItems">
+    <view class="ImageBox">
+    <image class="postImage"
+          wx:if="{{item.Photo1}}"
+          src="{{item.Photo1}}"
+          mode="scaleToFill"
+          data-nowurl="{{item.Photo1}}" data-nowid="{{y}}"
+          catchtap='previewImage'>
+    </image>
+    <image class="postImage"
+          wx:if="{{item.Photo2}}"
+          src="{{item.Photo2}}"
+          mode="scaleToFill"
+          data-nowurl="{{item.Photo2}}" data-nowid="{{y}}"
+          catchtap='previewImage'>
+    </image>
+    <image class="postImage"
+          wx:if="{{item.Photo3}}"
+          src="{{item.Photo3}}"
+          mode="scaleToFill"
+          data-nowurl="{{item.Photo3}}" data-nowid="{{y}}"
+          catchtap='previewImage'>
+    </image>
     </view>
   </view>
 
+  <!--地址-->
+  <view class="messageItems" wx:if="{{item.Address}}">
+    <image class="address" src="../pic/address.png">
+    </image>
+    <view class="mapContext">
+        {{item.Address}}
+    </view>
+  </view>
+
+
+</view>
+
+<view wx:if="{{notfind}}" class="container">
+  未找到您要搜索的内容
 </view>

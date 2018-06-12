@@ -120,6 +120,10 @@ Page({
       util.showModel("提示", '内容不能为空')
       return
     }
+    if (this.data.item["StatusCompleted"] == 0) {
+      util.showModel("提示", '该帖子已经被关闭,无法回复')
+      return
+    }
 
     var nowType = app.globalData.nowType;
     var sql = "insert into " + nowType + "Comments values(NULL," + this.data.item["Post_" + nowType + "_identity"] + ",'" + app.globalData.OpenID + "','" + this.data.comment + "',Now())"

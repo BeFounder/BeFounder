@@ -1,23 +1,116 @@
+@import "../../lib/weui.wxss";
+
+page{
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+.navbar{
+  flex: none;
+  display: flex;
+  background: #fff;
+}
+.navbar .item{
+  position: relative;
+  flex: auto;
+  text-align: center;
+  line-height: 80rpx;
+}
+.navbar .item.active{
+  color: #FFCC00;
+}
+.navbar .item.active:after{
+  content: "";
+  display: block;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 4rpx;
+  background: #FFCC00;
+}
+
+.share-btn 
+{ 
+width:100%; 
+color:green; 
+position:fixed; 
+bottom:0;
+right: 0;
+} 
+
+.buttom{  
+  width: 30%;
+  height: 15vw;
+  background: #fff;
+  margin-bottom: 2vw;
+} 
+
+.buttomList{  
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  bottom: 0 ;
+  width: 100%;
+} 
+
 .messageItems{
   background: #ffffff;
   display:flex;
-  margin: 5rpx;
+  margin-top: 5rpx;
+  width: 100%;
+  font-size: 33rpx;
+}
+
+.headBox{
+  background: #ffffff;
+  margin-top: 5rpx;
+  width: 100%;
+  font-size: 33rpx;
+}
+
+.Tel{
+  background: #ffffff;
+  display:flex;
+  text-align: right;
+  color: blue;
+  font-size: 30rpx;
+  width: 300rpx;
+}
+
+.postContext{
+  background: #ffffff;
   margin-left: 20rpx;
   margin-right: 20rpx;
   width: 100%;
   font-size: 35rpx;
+  word-break: break-all;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
-.replyContext{
+.mapContext{
   background: #ffffff;
   margin: 5rpx;
   margin-left: 20rpx;
   margin-right: 20rpx;
   width: 100%;
-  font-size: 40rpx;
+  font-size: 25rpx;
+  color:#9f9f9f;
+  display: flex;
 }
 
-.postContext{
+.address {
+    width: 25rpx;
+    height: 30rpx;
+    margin: 5rpx;
+    margin-left: 20rpx;
+    margin-right:0rpx; 
+    border-radius: 100%;
+    display: flex;
+}
+
+.replyContext{
   background: #f9f9f9;
   margin: 5rpx;
   margin-left: 20rpx;
@@ -25,16 +118,17 @@
   width: 100%;
   font-size: 30rpx;
   color: #9f9f9f;
+  display: flex;
 }
 
 .messageBox{
   background: #ffffff;
-  display:flex;
   justify-content: space-between;
   align-items: center;
   border: solid 1px #f0f0f0;
-  margin-top: 5rpx;
+  margin-top: 10rpx;
   flex-direction: column;
+  padding: 5rpx;
 }
 
 .userImage{
@@ -48,4 +142,54 @@
     height: 50rpx;
     margin: 20rpx;
     border-radius: 100%;
+}
+
+.postImage{
+    width: 215rpx;
+    height: 215rpx;
+    margin:5px;
+}
+
+.ImageBox{
+  background: #ffffff;
+  margin: 5rpx;
+  width: 100%;
+  font-size: 33rpx;
+}
+
+.comment {
+  border-radius: 10px;
+  width : 75%;
+  bottom : 5px;
+  left : 5px;
+  border: 1px solid blue;
+  background-color: white;
+  position:fixed;
+}
+
+.cbutton {
+  width : 20%;
+  bottom : 5px;
+  right : 5px;
+  position: fixed;
+  background-color :cornflowerblue;
+  color : black;
+}
+
+.title {
+  top : 0;
+  width : 100%;
+}
+
+.Comments {
+  width : 100%;
+  bottom : 100px;
+}
+
+.unLock {
+  border : solid 1px #FFCC00;
+}
+
+.Lock {
+  border : solid 1px #9f9f9f;
 }

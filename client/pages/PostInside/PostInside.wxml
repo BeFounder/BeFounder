@@ -9,11 +9,11 @@
     </view>
 
     <view class="headBox">
-      <view class="messageItems"  style='font-size:35px'>
+      <view class="messageItems"  style='font-size:35rpx'>
         {{item.Nickname}}
       </view>
-      <view class="messageItems" style='font-size:20px'>
-        {{item.time}}
+      <view class="messageItems" style='font-size:20rpx'>
+        {{item.PostTime}}
       </view>
     </view>
 
@@ -86,8 +86,13 @@
         </image>
     </view>
 
-    <view class="messageItems">
-      <text style="font-size:20px">{{item.Nickname}}</text>
+    <view class="headBox">
+      <view class="messageItems"  style='font-size:35rpx'>
+        {{item.Nickname}}
+      </view>
+      <view class="messageItems" style='font-size:20rpx'>
+        {{item.CommentTime}}
+      </view>
     </view>
 
     <view class="Tel" bindtap="getTel" data-ii="{{item.OpenID}}">

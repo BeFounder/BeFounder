@@ -22,7 +22,7 @@
         {{item.Nickname}}
       </view>
       <view class="messageItems" style='font-size:20rpx'>
-        {{item.time}}
+        {{item.PostTime}}
       </view>
     </view>
 
