@@ -56,6 +56,8 @@ Page({
         })
       }
     })
+
+    photoNum = 0
   },
 
   /**
@@ -249,6 +251,10 @@ Page({
 
             app.Send(sql)
             
+            var pages = getCurrentPages();
+            var prePage = pages[pages.length - 2]
+            prePage.onPullDownRefresh()
+
             wx.navigateBack()
             util.showSuccess('发表成功！')
           }
