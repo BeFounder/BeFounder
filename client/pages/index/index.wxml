@@ -26,8 +26,23 @@
       </view>
     </view>
 
-    <view class="Tel" catchtap="getTel" data-ii="{{item.OpenID}}" data-nid="{{y}}">
+    <view class="Tel" catchtap="getTel"
+      wx:if="{{item.OpenID!=myOpenID}}"
+     data-ii="{{item.OpenID}}" data-nid="{{y}}">
       联系楼主
+    </view>
+
+    <!-- 下面两个按钮需要折叠 大概是这样 -->
+    <view class="Tel" catchtap="CompleteTitle"
+      wx:if="{{item.OpenID==myOpenID}}"
+     data-ii="{{item.OpenID}}" data-nid="{{y}}">
+      完结
+    </view>
+    
+    <view class="Tel" catchtap="DelTitle"
+      wx:if="{{item.OpenID==myOpenID}}"
+     data-ii="{{item.OpenID}}" data-nid="{{y}}">
+      删除
     </view>
   </view>
 
@@ -92,7 +107,7 @@
 
 
 <modal hidden="{{hiddenmodalput}}" title="请输入搜索内容" confirm-text="搜索" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">  
-    <input type='text' bindinput="search" placeholder="请输入内容"/>  
+    <input type='text' value="{{sea}}" bindinput="search" placeholder="请输入内容"/>  
 </modal> 
 
 

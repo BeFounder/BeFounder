@@ -19,6 +19,7 @@ Page({
     animTranspond: {},//item位移,透明度  
     animInput: {},//item位移,透明度
     sea:"",
+    myOpenID :"",
   },
 
   plus: function () {
@@ -237,7 +238,8 @@ Page({
   //确认  
   confirm: function () {
     this.setData({
-      hiddenmodalput: true
+      hiddenmodalput: true,
+      sea : ""
     })
 
     console.log(this.data.sea)
@@ -334,6 +336,9 @@ Page({
     })
     this.CallTitle()
     
+    this.setData({
+      myOpenID : app.globalData.OpenID
+    })
   },
 
   previewImage: function (e) {

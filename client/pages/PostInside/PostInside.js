@@ -1,4 +1,4 @@
-// pages/PostInside/PostInside.js
+        // pages/PostInside/PostInside.js
 var util = require('../../utils/util.js');
 
 Page({
