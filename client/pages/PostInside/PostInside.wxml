@@ -8,8 +8,13 @@
         </image>
     </view>
 
-    <view class="messageItems" style="font-size:20px">
-      {{item.Nickname}}
+    <view class="headBox">
+      <view class="messageItems"  style='font-size:35px'>
+        {{item.Nickname}}
+      </view>
+      <view class="messageItems" style='font-size:20px'>
+        {{item.time}}
+      </view>
     </view>
 
     <view class="Tel" bindtap="getTel" data-ii="{{item.OpenID}}">

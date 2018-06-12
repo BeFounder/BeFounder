@@ -17,8 +17,13 @@
         </image>
     </view>
 
-    <view class="messageItems" style='font-size:18px'>
-      {{item.Nickname}}
+    <view class="headBox">
+      <view class="messageItems"  style='font-size:35rpx'>
+        {{item.Nickname}}
+      </view>
+      <view class="messageItems" style='font-size:20rpx'>
+        {{item.time}}
+      </view>
     </view>
 
     <view class="Tel" catchtap="getTel" data-ii="{{item.OpenID}}" data-nid="{{y}}">
@@ -35,7 +40,7 @@
   
   <!--帖子正文-->
   <view class="messageItems">
-    <text class="postContext" decode='{{true}}'>
+    <text class="postContext" decode='{{true}}' style='text-intent:0rpx;padding-left:0rpx'>
         {{item.Description}}
     </text>
   </view>

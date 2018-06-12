@@ -241,6 +241,9 @@ Page({
     })
 
     console.log(this.data.sea)
+    wx.navigateTo({
+      url: '../search/search?find=' + this.data.sea,
+    })
   }  ,
 
   search : function(e){
