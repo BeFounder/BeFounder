@@ -3,3 +3,15 @@
   margin-bottom: 20rpx;
 }
 
+.imageBox{
+  border: dashed 10rpx #cfcfcf;
+  height: 220rpx;
+  width: 220rpx;
+  left: 0;
+  bottom: 0;
+}
+
+.image{
+  height: 220rpx;
+  width: 220rpx;
+}

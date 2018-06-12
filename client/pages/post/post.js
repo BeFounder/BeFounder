@@ -40,6 +40,7 @@ Page({
 
 
     var sql = "select Connection from User where OpenID='" + getApp().globalData.OpenID + "'"
+    var that = this
 
     wx.request({
       url: 'https://867150985.myselftext.xyz/weapp/login',
