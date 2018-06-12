@@ -191,5 +191,5 @@ right: 0;
 }
 
 .Lock {
-  border : solid 1px #9f9f9f;
+  background-color : #9f9f9f;
 }

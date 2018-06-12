@@ -14,6 +14,8 @@ Page({
     comment : "",
     commentsArray : [],
     telHidden : true,
+    myOpenID : "",
+
   },
 
   /**
@@ -29,7 +31,8 @@ Page({
     })
     
     this.setData({
-      item : getApp().globalData.nowPost
+      item : getApp().globalData.nowPost,
+      myOpenID : getApp().globalData.OpenID
     })
 
     var nT = getApp().globalData.nowType
@@ -191,4 +194,79 @@ Page({
       }
     })
   },
+
+  CompleteTitle: function (e) {
+
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '该帖子将被标记为完结，是否确认？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log(e)
+          var i = e.currentTarget.dataset.nid
+
+          var nowType = "Post_" + getApp().globalData.nowType
+          var sql = "update " + nowType + " set StatusCompleted=0 where " + nowType + "_identity=" + that.data.item[nowType + "_identity"]
+
+          getApp().Send(sql)
+
+          util.showSuccess("成功")
+
+          var pages = getCurrentPages();
+          var prePage = pages[pages.length - 2]
+          prePage.onPullDownRefresh()
+          wx.navigateBack()
+
+        }
+      }
+    })
+
+
+  },
+
+  DelTitle: function (e) {
+
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '该帖子将被删除，是否确认？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log(e)
+          var i = e.currentTarget.dataset.nid
+
+          var nowType = getApp().globalData.nowType
+          var sql1 = "delete from " + nowType + "Comments where Post_" + nowType + "_identity=" + that.data.item["Post_" + nowType + "_identity"]
+
+          wx.request({
+            url: 'https://867150985.myselftext.xyz/weapp/login',
+            data: {
+              sql: sql1
+            },
+            header: {
+              "content-type": "application/json;charset=utf8"
+            },
+            success: function (res) {
+              var sql = "delete from Post_" + nowType + " where Post_" + nowType + "_identity=" + that.data.item["Post_" + nowType + "_identity"]
+
+              console.log(sql)
+              getApp().Send(sql)
+              util.showSuccess("成功")
+
+              var pages = getCurrentPages();
+              var prePage = pages[pages.length - 2]
+              prePage.onPullDownRefresh()
+              wx.navigateBack()
+
+            }
+          })
+
+        }
+      }
+    })
+
+
+  },
+
 })

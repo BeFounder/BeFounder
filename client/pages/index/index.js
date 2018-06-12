@@ -410,7 +410,48 @@ Page({
     })
 
     
-  }
+  },
+
+  DelTitle: function (e) {
+
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '该帖子将被删除，是否确认？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log(e)
+          var i = e.currentTarget.dataset.nid
+
+          var nowType = that.data.currentTab == 0 ? "Lost" : "Found"
+          var sql1 = "delete from " + nowType + "Comments where Post_" + nowType + "_identity=" + that.data.titleArray[i]["Post_" + nowType + "_identity"]
+
+          wx.request({
+            url: 'https://867150985.myselftext.xyz/weapp/login',
+            data: {
+              sql: sql1
+            },
+            header: {
+              "content-type": "application/json;charset=utf8"
+            },
+            success: function (res) {
+              var sql = "delete from Post_" + nowType + " where Post_" + nowType + "_identity=" + that.data.titleArray[i]["Post_" + nowType + "_identity"]
+
+              console.log(sql)
+              getApp().Send(sql)
+              util.showSuccess("成功")
+
+              that.onPullDownRefresh()
+
+            }
+          })
+
+        }
+      }
+    })
+
+
+  },
   
 
 })
