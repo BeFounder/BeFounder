@@ -73,6 +73,19 @@
     <view class="mapContext">
         {{item.Address}}
     </view>
+
+    <view class="isEnd" style="color:{{item.StatusCompleted==1 ? '#FFCC00' : '#37ef37'}}">
+      {{item.StatusCompleted==1 ? '未解决' : '已解决'}}
+    </view>
+  </view>
+
+  <view class="messageItems" wx:else>
+    <!--为了统一位置（懒得单独写样式了）-->
+    <view class="mapContext" style='width:75%'>
+    </view>
+    <view class="isEnd" style="color:{{item.StatusCompleted==1 ? '#FFCC00' : '#37ef37'}};">
+      {{item.StatusCompleted==1 ? '未解决' : '已解决'}}
+    </view>
   </view>
 
 

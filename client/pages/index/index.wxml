@@ -8,9 +8,13 @@
 <view class="messageBox" wx:for="{{titleArray}}" 
     wx:key="title" wx:for-index="y"  data-noid="{{y}}"
     bindtap='visTitle'>
+ 
+ 
+
   <!--头像和名字部分-->
   <view class="messageItems">
 
+    
     <view class="userImage">
       <image class="userinfo-avatar"
           src="{{item.UserPhoto}}">
@@ -44,7 +48,10 @@
      data-ii="{{item.OpenID}}" data-nid="{{y}}">
       删除
     </view>
+    
   </view>
+
+  
 
   <!--帖子标题-->
   <view class="messageItems">
@@ -87,7 +94,7 @@
   </view>
 
   <!--地址-->
-  <view class="messageItems" wx:if="{{item.Address}}">
+  <view class="messageItems" wx:if="{{item.Address}}" catchtap='getMap' data-noid="{{y}}">
     <image class="address" src="../pic/address.png">
     </image>
     <view class="mapContext">

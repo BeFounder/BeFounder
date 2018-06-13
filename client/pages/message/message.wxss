@@ -94,10 +94,20 @@ right: 0;
   margin: 5rpx;
   margin-left: 20rpx;
   margin-right: 20rpx;
-  width: 100%;
+  width: 70%;
   font-size: 25rpx;
   color:#9f9f9f;
   display: flex;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.isEnd{
+  background: #ffffff;
+  margin: 5rpx;
+  margin-right: 20rpx;
+  font-size: 25rpx;
+  right: 0;
 }
 
 .address {
@@ -187,9 +197,9 @@ right: 0;
 }
 
 .unLock {
-  border : solid 1px #FFCC00;
+  border : solid 2px #FFCC00;
 }
 
 .Lock {
-  background-color : #9f9f9f;
+  border : solid 2px #37ef37;
 }
