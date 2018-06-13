@@ -239,12 +239,14 @@ Page({
   confirm: function () {
     this.setData({
       hiddenmodalput: true,
-      sea : ""
     })
 
     console.log(this.data.sea)
     wx.navigateTo({
       url: '../search/search?find=' + this.data.sea,
+    })
+    this.setData({
+      sea: ""
     })
   }  ,
 
