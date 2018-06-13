@@ -115,6 +115,7 @@ Page({
     console.log(this.data.comment)
 
     var app = getApp();
+    var that = this
 
     var fl = 0;
     for (var i = 0; i < this.data.comment.length; i++)
@@ -131,18 +132,28 @@ Page({
     var nowType = app.globalData.nowType;
     var sql = "insert into " + nowType + "Comments values(NULL," + this.data.item["Post_" + nowType + "_identity"] + ",'" + app.globalData.OpenID + "','" + this.data.comment + "',Now())"
 
-    console.log(sql)
-    app.Send(sql)
-
     var sql1 = "update User set " + nowType + "Comments_num=" + nowType + "Comments_num+1 where OpenID='" + app.globalData.OpenID + "'"
 
     app.Send(sql1)
 
-    this.onLoad();
+    wx.request({
+      url: 'https://867150985.myselftext.xyz/weapp/login',
+      data: {
+        sql: sql
+      },
+      header: {
+        "content-type": "application/json;charset=utf8"
+      },
+      success: function (res) {
 
-    this.setData({
-      comment : ""
+        that.onLoad();
+
+        that.setData({
+          comment: ""
+        })
+      }
     })
+
   },
 
   previewImage: function (e) {
