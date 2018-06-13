@@ -6,7 +6,9 @@
     </view>
     
     <view class="weui-cells weui-cells_after-title" style='margin-top:5px;padding:20rpx'>
-      <textarea name='others' maxlength='1999' placeholder='在此输入正文' />
+      <textarea name='others' placeholder='在此输入正文' />
+
+      <!--图片部分-->
       <view class="section" style='display:flex;'>
         <image
             style="width:220rpx;height:220rpx;margin-left:10rpx;margin-right:10rpx;"
@@ -24,15 +26,24 @@
           </image>
         </view>
       </view>
+
+      <!--地址部分-->
+      <view class="addressBox"  bindtap='Mapcheck' wx:if='{{address != null && address != ""}}'>
+        <image class="address" src="../pic/address.png">
+        </image>
+        <view class="mapContext">
+          {{address}}
+        </view>
+      </view>
+      <view class="addressBox_null"  bindtap='Mapcheck'  wx:else>
+        <image class="address" src="../pic/address.png">
+        </image>
+        <view class="mapContext_null">
+          选择地址
+        </view>
+      </view>
+
     </view>
-
-    
-
-    <switch name='switch' bindchange='Mapcheck' checked='{{checked}}'>
-      {{address}}
-    </switch>
-
-    
 
     <radio-group class="radio-group" bindchange="radioChange">
       <label class="radio" wx:for="{{chooses}}" wx:key="unique">
@@ -40,7 +51,7 @@
       </label>
     </radio-group>
 
-    <button formType='submit'>发布</button>
+    <button formType='submit' class="submit">发布</button>
 
   </form>
 </view>

@@ -9,7 +9,7 @@ Page({
    * 页面的初始数据
    */
   data: {
-    address : "选择地点",
+    address : "",
     latitude : "", 
     longitude : "",
     addPhotoCheck : true,
@@ -112,30 +112,21 @@ Page({
   Mapcheck : function(e){
 
     var that = this
-    if (e.detail.value == true)
-    {
-      wx.chooseLocation({
-        success: function(res) {
-          that.setData({
-            address : res.address,
-            latitude : res.latitude,
-            longitude : res.longitude
-          })
-        },
+    wx.chooseLocation({
+      success: function (res) {
+        that.setData({
+          address: res.address,
+          latitude: res.latitude,
+          longitude: res.longitude
+        })
+      },
 
-        fail : function(e) {
-          that.setData({
-            checked : false
-          })
-        }
-      })
-    }
-    else
-    {
-      this.setData({
-        address : "选择地点"
-      })
-    }
+      fail: function (e) {
+        that.setData({
+          address: ""
+        })
+      }
+    })
   },
 
 
@@ -246,7 +237,8 @@ Page({
               sql = sql + "NULL,"
 
             var adr = "NULL,NULL,NULL,"
-            if (alldata.switch) adr = "'" + that.data.address + "'," + that.data.longitude + "," + that.data.latitude + ","
+
+            if (that.data.address != "" && that.data.address != null) adr = "'" + that.data.address + "'," + that.data.longitude + "," + that.data.latitude + ","
             sql = sql + "'" + alldata.others + "',0," + adr + "1,1);"
 
             app.Send(sql)
@@ -282,12 +274,16 @@ Page({
                     sql = sql + "NULL,"
 
                   var adr = "NULL,NULL,NULL,"
-                  if (alldata.switch) adr = "'" + that.data.address + "'," + that.data.longitude + "," + that.data.latitude + ","
+                  if (that.data.address != "" && that.data.address != null) adr = "'" + that.data.address + "'," + that.data.longitude + "," + that.data.latitude + ","
                   sql = sql + "'" + alldata.others + "',0," + adr + "1,1);"
 
                   sql = sql.split('&hc').join('\n');
                   console.log(sql)
                   app.Send(sql)
+
+                  var pages = getCurrentPages();
+                  var prePage = pages[pages.length - 2]
+                  prePage.onPullDownRefresh()
 
                   wx.navigateBack()
                   util.showSuccess('发表成功！')
