@@ -21,8 +21,8 @@ Page({
     checked : false,
 
     chooses : [
-      { name: 'Lost', value: "寻物启事" },
-      { name: 'Found', value: "失物招领" }
+      { name: 'Lost', value: "失物招领" },
+      { name: 'Found', value: "寻物启事" }
     ],
     tel : "",
   },
