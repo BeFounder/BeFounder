@@ -23,11 +23,9 @@ Page({
    */
   onLoad: function (options) {
 
-    var wd = parseInt(wx.getSystemInfoSync().windowWidth / 3) - 2
 
     this.setData({
-      imageWidth: wd,
-      imageHeight: wd
+      commentsArray : []
     })
     
     this.setData({
@@ -89,6 +87,8 @@ Page({
    */
   onPullDownRefresh: function () {
     this.onLoad()
+
+    wx.stopPullDownRefresh();
   },
 
   /**
@@ -268,5 +268,49 @@ Page({
 
 
   },
+
+
+  getMap: function (e) {
+    var that = this
+
+    wx.openLocation({
+      latitude: parseFloat(that.data.item["Latitude"]),
+      longitude: parseFloat(that.data.item["Longitude"]),
+    })
+  },
+
+  delComment : function(e) {
+    var i = e.currentTarget.dataset.ii;
+    var that = this
+
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除这个评论吗？',
+      success: function (res) {
+        if (res.confirm) {
+          var nowType = getApp().globalData.nowType
+
+          var sql = "delete from " + nowType + "Comments where " + nowType + "_Comments_identity=" + that.data.commentsArray[i][nowType + "_Comments_identity"]
+
+          wx.request({
+            url: 'https://867150985.myselftext.xyz/weapp/login',
+            data: {
+              sql: sql
+            },
+            header: {
+              "content-type": "application/json;charset=utf8"
+            },
+            success: function (res) {
+
+              util.showSuccess("删除成功")
+              that.onPullDownRefresh()
+            }
+          })
+        }
+      }
+    })
+    
+  }
+
 
 })

@@ -85,6 +85,9 @@ right: 0;
   width: 100%;
   font-size: 35rpx;
   word-break: break-all;
+  overflow : hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mapContext{

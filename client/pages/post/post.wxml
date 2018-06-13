@@ -2,11 +2,11 @@
   <form bindsubmit='submitTopic'>
 
     <view class="weui-cells weui-cells_after-title" auto-focus style='margin-top:5px;padding:20rpx'>
-        <input class="weui-input" name='title' placeholder="在此输入标题"/>
+        <input class="weui-input" maxlength='25' name='title' placeholder="在此输入标题"/>
     </view>
     
     <view class="weui-cells weui-cells_after-title" style='margin-top:5px;padding:20rpx'>
-      <textarea name='others' placeholder='在此输入正文' />
+      <textarea name='others' maxlength='1000' placeholder='在此输入正文' />
 
       <!--图片部分-->
       <view class="section" style='display:flex;'>

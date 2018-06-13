@@ -62,9 +62,9 @@
   
   <!--帖子正文-->
   <view class="messageItems">
-    <text class="postContext" decode='{{true}}' style='text-intent:0rpx;padding-left:0rpx'>
+    <view class="postContext" decode='{{true}}' style='text-intent:0rpx;padding-left:0rpx'>
         {{item.Description}}
-    </text>
+    </view>
   </view>
 
   <view class="messageItems">
