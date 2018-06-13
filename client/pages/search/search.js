@@ -33,6 +33,7 @@ Page({
     str = str + "true)"
 
     var arr = []
+    var fd = false
     var sql1 = "select * from Post_Lost,User where User.OpenID=Post_Lost.OpenID and (" + str + ")"
     var sql2 = "select * from Post_Found,User where User.OpenID=Post_Found.OpenID and (" + str + ")"
 
@@ -50,6 +51,7 @@ Page({
         {
           res.data[i]["type"] = "失物招领"
           arr.push(res.data[i])
+          fd = true
         }
 
         wx.request({
@@ -64,6 +66,7 @@ Page({
             for (var i = 0; i < res.data.length; i++) {
               res.data[i]["type"] = "寻物启事"
               arr.push(res.data[i])
+              fd = true
             }
 
             arr.sort(function(a,b){
@@ -73,7 +76,8 @@ Page({
             })
 
             that.setData({
-              titleArray : arr
+              titleArray : arr,
+              notfind : !fd
             })
           }
         })
