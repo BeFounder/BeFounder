@@ -281,6 +281,8 @@ Page({
 
   delComment : function(e) {
     var i = e.currentTarget.dataset.ii;
+
+
     var that = this
 
     wx.showModal({
@@ -291,6 +293,8 @@ Page({
           var nowType = getApp().globalData.nowType
 
           var sql = "delete from " + nowType + "Comments where " + nowType + "_Comments_identity=" + that.data.commentsArray[i][nowType + "_Comments_identity"]
+
+          console.log(sql)
 
           wx.request({
             url: 'https://867150985.myselftext.xyz/weapp/login',

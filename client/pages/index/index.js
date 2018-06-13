@@ -250,7 +250,7 @@ Page({
 
     this.setData({
       imageWidth: wd,
-      imageHeight: wd
+      imageHeight: wd,
     })
     this.CallTitle()
     

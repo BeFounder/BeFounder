@@ -1,5 +1,6 @@
 // pages/PostInside/PostInside.js
 var util = require('../../utils/util.js');
+var ss = [];
 
 Page({
 
@@ -22,8 +23,12 @@ Page({
    */
   onLoad: function (options) {
 
+    if (options != "" && options != null) ss = []
+    if (ss == []) ss = options.find.split(" ");
+
+    console.log(ss)
+
     var that = this
-    var ss = options.find.split(" ");
     var str = "("
     for (var i = 0; i < ss.length; i++)
       str = str + "PostTitle like '%" + ss[i] + "%' and "
@@ -34,8 +39,8 @@ Page({
 
     var arr = []
     var fd = false
-    var sql1 = "select * from Post_Lost,User where User.OpenID=Post_Lost.OpenID and (" + str + ")"
-    var sql2 = "select * from Post_Found,User where User.OpenID=Post_Found.OpenID and (" + str + ")"
+    var sql1 = "select * from Post_Lost,User where User.OpenID=Post_Lost.OpenID and StatusCompleted=1 and (" + str + ")"
+    var sql2 = "select * from Post_Found,User where User.OpenID=Post_Found.OpenID and StatusCompleted=1 and (" + str + ")"
 
     console.log(sql1)
     wx.request({
@@ -110,13 +115,18 @@ Page({
    * 生命周期函数--监听页面卸载
    */
   onUnload: function () {
-
+    var pages = getCurrentPages();
+    var prePage = pages[pages.length - 2]
+    prePage.onPullDownRefresh()
   },
 
   /**
    * 页面相关事件处理函数--监听用户下拉动作
    */
   onPullDownRefresh: function () {
+    this.setData({
+      titleArray : []
+    })
     this.onLoad()
   },
 

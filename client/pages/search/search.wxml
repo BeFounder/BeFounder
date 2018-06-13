@@ -29,15 +29,15 @@
   <!--帖子标题-->
   <view class="messageItems">
     <view class="postContext" style='color:blue;'>
-        {{item.PostTitle}}test
+        {{item.PostTitle}}
     </view>
   </view>
   
   <!--帖子正文-->
   <view class="messageItems">
-    <text class="postContext" decode='{{true}}' style="margin-top:0px">
+    <view class="postContext" decode='{{true}}' style="margin-top:0px">
         {{item.Description}}
-    </text>
+    </view>
   </view>
 
   <view class="messageItems">
