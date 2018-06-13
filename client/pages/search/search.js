@@ -24,7 +24,7 @@ Page({
   onLoad: function (options) {
 
     if (options != "" && options != null) ss = []
-    if (ss == []) ss = options.find.split(" ");
+    if (ss.length==0) ss = options.find.split(" ");
 
     console.log(ss)
 
