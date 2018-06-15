@@ -112,7 +112,7 @@
     </view>
 
     <view class="Tel" bindtap="getTel" data-ii="{{item.OpenID}}" wx:if="{{item.OpenID!=myOpenID}}">
-      联系ta
+      联系TA
     </view>
     <view class="Tel" bindtap="delComment" data-ii="{{y}}" wx:if="{{item.OpenID==myOpenID}}">
       删除评论
