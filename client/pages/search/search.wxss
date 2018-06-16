@@ -128,6 +128,7 @@ right: 0;
   align-items: center;
   border: solid 1px #f0f0f0;
   margin-top: 10rpx;
+  flex-direction: column;
   padding: 5rpx;
 }
 
@@ -157,20 +158,31 @@ right: 0;
   font-size: 33rpx;
 }
 
-.img-plus-style {  
-  height: 160rpx;  
-  width: 160rpx;  
-  position: fixed;  
-  bottom: 90rpx;  
-  right: 30rpx;  
-  z-index: 100;  
-}  
-  
-.img-style {  
-  height: 110rpx;  
-  width: 110rpx;  
-  position: fixed;  
-  bottom: 100rpx;  
-  right: 50rpx;  
-  opacity: 0;  
-}  
+.comment {
+  border-radius: 10px;
+  width : 75%;
+  bottom : 5px;
+  left : 5px;
+  border: 1px solid blue;
+  background-color: white;
+  position:fixed;
+}
+
+.cbutton {
+  width : 20%;
+  bottom : 5px;
+  right : 5px;
+  position: fixed;
+  background-color :cornflowerblue;
+  color : black;
+}
+
+.title {
+  top : 0;
+  width : 100%;
+}
+
+.Comments {
+  width : 100%;
+  bottom : 100px;
+}

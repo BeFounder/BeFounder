@@ -1,0 +1,31 @@
+.userinfo-avatar {
+    width: 100rpx;
+    height: 100rpx;
+    margin: 20rpx;
+    border-radius: 100%;
+}
+
+.info-items{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:20rpx 40rpx;
+    border: solid 1px #f0f0f0;
+    background: #ffffff;
+}
+
+.infotext{
+    display: flex;
+    align-items: center;
+    right: 0;
+}
+
+.info-message{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding:20rpx 40rpx;
+    margin-top: 50rpx;
+    border: solid 1px #f0f0f0;
+    background: #ffffff;
+}

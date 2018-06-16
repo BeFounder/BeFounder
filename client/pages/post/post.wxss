@@ -1,0 +1,69 @@
+
+.page-section{
+  margin-bottom: 20rpx;
+}
+
+.imageBox{
+  border: dashed 10rpx #cfcfcf;
+  height: 220rpx;
+  width: 220rpx;
+  left: 0;
+  bottom: 0;
+}
+
+.image{
+  height: 220rpx;
+  width: 220rpx;
+}
+
+.address {
+    width: 25rpx;
+    height: 30rpx;
+    margin-left: 10rpx;
+}
+
+.mapContext{
+  font-size: 25rpx;
+  color:#6f6f6f;
+  margin-left: 5rpx;
+  background: #ffffff;
+}
+
+.mapContext_null{
+  font-size: 25rpx;
+  color:#6f6f6f;
+  background-color: #dfdfdf;
+  margin-left: 5rpx;
+}
+
+.addressBox{
+  margin-top: 10rpx;
+  display:flex;
+  border-radius: 20rpx;
+  padding: 5rpx;
+}
+
+.addressBox_null{
+  margin-top: 10rpx;
+  display:flex;
+  border-radius: 20rpx;
+  background-color: #dfdfdf;
+  padding: 5rpx;
+  width: 150rpx;
+}
+
+.radio-group{
+  margin-top: 10rpx;
+  display: flex;
+  justify-content: space-around;
+  background-color: #ffffff;
+  padding: 20rpx;
+}
+
+.submit{
+  margin-top: 20rpx;
+  background-color: #ffffff;
+  padding: 10rpx;
+  font-size: 40rpx;
+  color: blue;
+}

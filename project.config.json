@@ -7,6 +7,7 @@
 		"newFeature": true
 	},
 	"appid": "wxbd77164883923d58",
-	"projectname": "aa",
+	"projectname": "BeFounder",
+	"compileType": "miniprogram",
 	"condition": {}
 }

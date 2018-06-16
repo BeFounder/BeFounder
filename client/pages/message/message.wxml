@@ -1,0 +1,92 @@
+<!--pages/search/search.wxml-->
+<view class="messageBox {{item.StatusCompleted==1 ? 'unLock' : 'Lock'}}" wx:for="{{titleArray}}"
+  wx:key="title" wx:for-index="y"  data-noid="{{y}}"
+    bindtap='visTitle'>
+  <!--头像和名字部分-->
+  <view class="messageItems">
+
+    <view class="userImage">
+      <image class="userinfo-avatar"
+          src="{{item.UserPhoto}}">
+        </image>
+    </view>
+
+    <view class="headBox">
+      <view class="messageItems"  style='font-size:35rpx'>
+        {{item.Nickname}}
+      </view>
+      <view class="messageItems" style='font-size:20rpx'>
+        {{item.PostTime}}
+      </view>
+    </view>
+
+    <!--失物招领/寻物启事-->
+    <view class="Tel">
+      {{item.type}}
+    </view>
+  </view>
+
+  <!--帖子标题-->
+  <view class="messageItems">
+    <view class="postContext" style='color:blue;'>
+        {{item.PostTitle}}
+    </view>
+  </view>
+  
+  <!--帖子正文-->
+  <view class="messageItems">
+    <view class="postContext" decode='{{true}}' style="margin-top:0px">
+        {{item.Description}}
+    </view>
+  </view>
+
+  <view class="messageItems">
+    <view class="ImageBox">
+    <image class="postImage"
+          wx:if="{{item.Photo1}}"
+          src="{{item.Photo1}}"
+          mode="scaleToFill"
+          data-nowurl="{{item.Photo1}}" data-nowid="{{y}}"
+          catchtap='previewImage'>
+    </image>
+    <image class="postImage"
+          wx:if="{{item.Photo2}}"
+          src="{{item.Photo2}}"
+          mode="scaleToFill"
+          data-nowurl="{{item.Photo2}}" data-nowid="{{y}}"
+          catchtap='previewImage'>
+    </image>
+    <image class="postImage"
+          wx:if="{{item.Photo3}}"
+          src="{{item.Photo3}}"
+          mode="scaleToFill"
+          data-nowurl="{{item.Photo3}}" data-nowid="{{y}}"
+          catchtap='previewImage'>
+    </image>
+    </view>
+  </view>
+
+  <!--地址-->
+  <view class="messageItems" wx:if="{{item.Address}}">
+    <image class="address" src="../pic/address.png">
+    </image>
+    <view class="mapContext">
+        {{item.Address}}
+    </view>
+
+    <view class="isEnd" style="color:{{item.StatusCompleted==1 ? '#FFCC00' : '#37ef37'}}">
+      {{item.StatusCompleted==1 ? '未解决' : '已解决'}}
+    </view>
+  </view>
+
+  <view class="messageItems" wx:else>
+    <!--为了统一位置（懒得单独写样式了）-->
+    <view class="mapContext" style='width:75%'>
+    </view>
+    <view class="isEnd" style="color:{{item.StatusCompleted==1 ? '#FFCC00' : '#37ef37'}};">
+      {{item.StatusCompleted==1 ? '未解决' : '已解决'}}
+    </view>
+  </view>
+
+
+</view>

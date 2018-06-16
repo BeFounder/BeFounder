@@ -1,0 +1,331 @@
+        // pages/PostInside/PostInside.js
+var util = require('../../utils/util.js');
+
+Page({
+
+  /**
+   * 页面的初始数据
+   */
+  data: {
+    item : {},
+
+    imageWidth: 0,
+    imageHeight: 0,
+    comment : "",
+    commentsArray : [],
+    telHidden : true,
+    myOpenID : "",
+
+  },
+
+  /**
+   * 生命周期函数--监听页面加载
+   */
+  onLoad: function (options) {
+
+
+    this.setData({
+      commentsArray : []
+    })
+    
+    this.setData({
+      item : getApp().globalData.nowPost,
+      myOpenID : getApp().globalData.OpenID
+    })
+
+    var nT = getApp().globalData.nowType
+    var sql = "select * from " + nT + "Comments,User where Post_" + nT + "_identity =" + this.data.item["Post_" + nT + "_identity"] + " and User.OpenID=" + nT + "Comments.OpenID"
+
+    var that = this
+
+    wx.request({
+      url: 'https://867150985.myselftext.xyz/weapp/login',
+      data: {
+        sql: sql
+      },
+      header: {
+        "content-type": "application/json;charset=utf8"
+      },
+      success: function (res) {
+        that.setData({
+          commentsArray : res.data
+        })
+      }
+    })
+  },
+
+  /**
+   * 生命周期函数--监听页面初次渲染完成
+   */
+  onReady: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面显示
+   */
+  onShow: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面隐藏
+   */
+  onHide: function () {
+  
+  },
+
+  /**
+   * 生命周期函数--监听页面卸载
+   */
+  onUnload: function () {
+  
+  },
+
+  /**
+   * 页面相关事件处理函数--监听用户下拉动作
+   */
+  onPullDownRefresh: function () {
+    this.onLoad()
+
+    wx.stopPullDownRefresh();
+  },
+
+  /**
+   * 页面上拉触底事件的处理函数
+   */
+  onReachBottom: function () {
+  
+  },
+
+  /**
+   * 用户点击右上角分享
+   */
+  onShareAppMessage: function () {
+  
+  },
+
+  CommentInput : function(e){
+    this.setData({
+      comment : e.detail.value
+    })
+  },
+
+  CommentAdd : function(){
+    console.log(this.data.comment)
+
+    var app = getApp();
+    var that = this
+
+    var fl = 0;
+    for (var i = 0; i < this.data.comment.length; i++)
+      if (this.data.comment[i] != ' ') fl = 1;
+    if (this.data.comment === "" || this.data.comment === null || fl == 0) {
+      util.showModel("提示", '内容不能为空')
+      return
+    }
+    if (this.data.item["StatusCompleted"] == 0) {
+      util.showModel("提示", '该帖子已经被关闭,无法回复')
+      return
+    }
+
+    var nowType = app.globalData.nowType;
+    var sql = "insert into " + nowType + "Comments values(NULL," + this.data.item["Post_" + nowType + "_identity"] + ",'" + app.globalData.OpenID + "','" + this.data.comment + "',Now())"
+
+    var sql1 = "update User set " + nowType + "Comments_num=" + nowType + "Comments_num+1 where OpenID='" + app.globalData.OpenID + "'"
+
+    app.Send(sql1)
+
+    wx.request({
+      url: 'https://867150985.myselftext.xyz/weapp/login',
+      data: {
+        sql: sql
+      },
+      header: {
+        "content-type": "application/json;charset=utf8"
+      },
+      success: function (res) {
+
+        that.onLoad();
+
+        that.setData({
+          comment: ""
+        })
+      }
+    })
+
+  },
+
+  previewImage: function (e) {
+
+    var that = this
+    var current = e.target.dataset.nowurl
+    if (current == null) return
+    var i = e.target.dataset.nowid
+
+    var urls = [];
+    for (var k = 1; k <= 3; k++)
+      if (that.data.item["Photo" + k] != null) urls.push(that.data.item["Photo" + k])
+
+    wx.previewImage({
+      current: current,
+      urls: urls
+    })
+  },
+
+  cancel : function(){
+    this.setData({
+      telHidden : true
+    })
+  },
+
+  getTel: function (e) {
+    var that = this
+    var ii = e.currentTarget.dataset.ii
+    console.log(e)
+
+    var sql = "select Connection from User where OpenID='" + ii + "'"
+
+    wx.request({
+      url: 'https://867150985.myselftext.xyz/weapp/login',
+      data: {
+        sql: sql
+      },
+      header: {
+        "content-type": "application/json;charset=utf8"
+      },
+      success: function (res) {
+        that.setData({
+          tel: res.data[0]["Connection"]
+        })
+
+        that.setData({
+          telHidden: false
+        })
+      }
+    })
+  },
+
+  CompleteTitle: function (e) {
+
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '该帖子将被标记为完结，是否确认？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log(e)
+          var i = e.currentTarget.dataset.nid
+
+          var nowType = "Post_" + getApp().globalData.nowType
+          var sql = "update " + nowType + " set StatusCompleted=0 where " + nowType + "_identity=" + that.data.item[nowType + "_identity"]
+
+          getApp().Send(sql)
+
+          util.showSuccess("成功")
+
+          var pages = getCurrentPages();
+          var prePage = pages[pages.length - 2]
+          prePage.onPullDownRefresh()
+          wx.navigateBack()
+
+        }
+      }
+    })
+
+
+  },
+
+  DelTitle: function (e) {
+
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '该帖子将被删除，是否确认？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log(e)
+          var i = e.currentTarget.dataset.nid
+
+          var nowType = getApp().globalData.nowType
+          var sql1 = "delete from " + nowType + "Comments where Post_" + nowType + "_identity=" + that.data.item["Post_" + nowType + "_identity"]
+
+          wx.request({
+            url: 'https://867150985.myselftext.xyz/weapp/login',
+            data: {
+              sql: sql1
+            },
+            header: {
+              "content-type": "application/json;charset=utf8"
+            },
+            success: function (res) {
+              var sql = "delete from Post_" + nowType + " where Post_" + nowType + "_identity=" + that.data.item["Post_" + nowType + "_identity"]
+
+              console.log(sql)
+              getApp().Send(sql)
+              util.showSuccess("成功")
+
+              var pages = getCurrentPages();
+              var prePage = pages[pages.length - 2]
+              prePage.onPullDownRefresh()
+              wx.navigateBack()
+
+            }
+          })
+
+        }
+      }
+    })
+
+
+  },
+
+
+  getMap: function (e) {
+    var that = this
+
+    wx.openLocation({
+      latitude: parseFloat(that.data.item["Latitude"]),
+      longitude: parseFloat(that.data.item["Longitude"]),
+    })
+  },
+
+  delComment : function(e) {
+    var i = e.currentTarget.dataset.ii;
+
+
+    var that = this
+
+    wx.showModal({
+      title: '提示',
+      content: '确定要删除这个评论吗？',
+      success: function (res) {
+        if (res.confirm) {
+          var nowType = getApp().globalData.nowType
+
+          var sql = "delete from " + nowType + "Comments where " + nowType + "_Comments_identity=" + that.data.commentsArray[i][nowType + "_Comments_identity"]
+
+          console.log(sql)
+
+          wx.request({
+            url: 'https://867150985.myselftext.xyz/weapp/login',
+            data: {
+              sql: sql
+            },
+            header: {
+              "content-type": "application/json;charset=utf8"
+            },
+            success: function (res) {
+
+              util.showSuccess("删除成功")
+              that.onPullDownRefresh()
+            }
+          })
+        }
+      }
+    })
+    
+  }
+
+
+})

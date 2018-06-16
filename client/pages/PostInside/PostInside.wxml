@@ -1,20 +1,7 @@
-<!--导航条-->
-<view class="navbar">
-  <text wx:for="{{navbar}}" data-idx="{{index}}" class="item {{currentTab==index ? 'active' : ''}}" wx:key="unique" bindtap="navbarTap">{{item}}</text>
-</view>
-
-<!--首页-->
-<!--一个帖子框-->
-<view class="messageBox" wx:for="{{titleArray}}" 
-    wx:key="title" wx:for-index="y"  data-noid="{{y}}"
-    bindtap='visTitle'>
- 
- 
-
+<view class="messageBox">
   <!--头像和名字部分-->
   <view class="messageItems">
 
-    
     <view class="userImage">
       <image class="userinfo-avatar"
           src="{{item.UserPhoto}}">
@@ -38,7 +25,7 @@
 
     <!-- 下面两个按钮需要折叠 大概是这样 -->
     <view class="Tel" catchtap="CompleteTitle"
-      wx:if="{{item.OpenID==myOpenID}}"
+      wx:if="{{item.OpenID==myOpenID && item.StatusCompleted==1}}"
      data-ii="{{item.OpenID}}" data-nid="{{y}}">
       完结
     </view>
@@ -48,10 +35,7 @@
      data-ii="{{item.OpenID}}" data-nid="{{y}}">
       删除
     </view>
-    
   </view>
-
-  
 
   <!--帖子标题-->
   <view class="messageItems">
@@ -62,9 +46,9 @@
   
   <!--帖子正文-->
   <view class="messageItems">
-    <view class="postContext" decode='{{true}}' style='text-intent:0rpx;padding-left:0rpx'>
+    <text class="postContext" decode='{{true}}' style="margin-top:0px">
         {{item.Description}}
-    </view>
+    </text>
   </view>
 
   <view class="messageItems">
@@ -94,7 +78,7 @@
   </view>
 
   <!--地址-->
-  <view class="messageItems" wx:if="{{item.Address}}" catchtap='getMap' data-noid="{{y}}">
+  <view class="messageItems" wx:if="{{item.Address}}" catchtap='getMap'>
     <image class="address" src="../pic/address.png">
     </image>
     <view class="mapContext">
@@ -103,24 +87,59 @@
   </view>
 
 
+
 </view>
 
+<view class="Comments" wx:for="{{commentsArray}}" wx:key="comments" wx:for-index="y" style="background-color:white;">
+
+  <view style="height:5px;background-color:#F6F6F6">
+  </view>
+  <view class="messageItems">
+
+    <view class="userImage">
+      <image class="userinfo-avatar"
+          src="{{item.UserPhoto}}">
+        </image>
+    </view>
+
+    <view class="headBox">
+      <view class="messageItems"  style='font-size:35rpx'>
+        {{item.Nickname}}
+      </view>
+      <view class="messageItems" style='font-size:20rpx'>
+        {{item.CommentTime}}
+      </view>
+    </view>
+
+    <view class="Tel" bindtap="getTel" data-ii="{{item.OpenID}}" wx:if="{{item.OpenID!=myOpenID}}">
+      联系TA
+    </view>
+    <view class="Tel" bindtap="delComment" data-ii="{{y}}" wx:if="{{item.OpenID==myOpenID}}">
+      删除评论
+    </view>
+  </view>
+  
+  <view class="messageItems">
+    <text class="postContext">
+        {{item.Text}}
+    </text>
+  </view>
+
+</view>
+
+<view style="height:100px; bottom:0">
+  <text>\n\n</text>
+</view>
+
+<view class="tabCom">
+
+    <view class="comment">
+        <input bindinput='CommentInput' value="{{comment}}" class="weui-input" 
+        name='title' placeholder="在此评论"/>
+    </view>
+    <button class="cbutton" bindtap='CommentAdd'>评论</button>
+</view>
 
 <modal hidden="{{telHidden}}" title="联系方式" confirm-text="返回" bindconfirm="cancel" no-cancel="true">  
     {{(tel == "" || tel == null) ? "用户没有填写联系方式" : tel }}
 </modal> 
-
-<!--搜索-->
-
-
-<modal hidden="{{hiddenmodalput}}" title="请输入搜索内容" confirm-text="搜索" cancel-text="返回" bindcancel="cancel" bindconfirm="confirm">  
-    <input type='text' value="{{sea}}" bindinput="search" placeholder="请输入内容"/>  
-</modal> 
-
-
-<view>  
-  <image src="../pic/doc.png" class="img-style" animation="{{animCollect}}" bindtap="toPost"></image>  
-  <image src="../pic/my.png" class="img-style" animation="{{animTranspond}}" bindtap="toUser"></image>  
-  <image src="../pic/search.png" class="img-style" animation="{{animInput}}" bindtap="modalinput"></image>  
-  <image src="../pic/plus.png" class="img-plus-style" animation="{{animPlus}}" bindtap="plus"></image>  
-</view>  

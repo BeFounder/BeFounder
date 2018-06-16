@@ -39,4 +39,19 @@ var showModel = (title, content) => {
     })
 }
 
-module.exports = { formatTime, showBusy, showSuccess, showModel }
+function sendSql(sql) {
+  wx.request({
+    url: 'https://867150985.myselftext.xyz/weapp/login',
+    data: {
+      sql: sql
+    },
+    header: {
+      "content-type": "application/json;charset=utf8"
+    },
+    success: function (res) {
+      return res.data
+    }
+  })
+}
+
+module.exports = { formatTime, showBusy, showSuccess, showModel,sendSql }

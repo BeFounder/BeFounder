@@ -1,11 +1,17 @@
 {
   "pages": [
+    "pages/title/title",
     "pages/index/index",
-    "pages/addCgi/addCgi"
+    "pages/addCgi/addCgi",
+    "pages/post/post",
+    "pages/user/user",
+    "pages/message/message",
+    "pages/PostInside/PostInside",
+    "pages/search/search"
   ],
   "window": {
     "backgroundColor": "#F6F6F6",
-    "backgroundTextStyle": "light",
+    "backgroundTextStyle": "dark",
     "navigationBarBackgroundColor": "#F6F6F6",
     "navigationBarTitleText": "Wafer Quick Start",
     "navigationBarTextStyle": "black"

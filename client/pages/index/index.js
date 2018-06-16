@@ -1,220 +1,385 @@
-//index.js
-var qcloud = require('../../vendor/wafer2-client-sdk/index')
-var config = require('../../config')
-var util = require('../../utils/util.js')
+var util = require('../../utils/util.js');
 
+var app = getApp()
 Page({
-    data: {
-        userInfo: {},
-        logged: false,
-        takeSession: false,
-        requestResult: ''
-    },
+  data: {
+    navbar: ['失物招领', '寻物启事'],
+    currentTab: 0,
+    hiddenmodalput: true,//搜索框初始为不可见
+    telHidden: true,//联系方式框初始为不可见
+    titleArray : [
 
-    // 用户登录示例
-    login: function() {
-        if (this.data.logged) return
+    ], 
+    imageWidth: 0,
+    imageHeight: 0,
+    tel : "",
+    isPopping: true,//是否已经弹出  
+    animPlus: {},//旋转动画  
+    animCollect: {},//item位移,透明度  
+    animTranspond: {},//item位移,透明度  
+    animInput: {},//item位移,透明度
+    sea:"",
+    myOpenID :"",
+  },
 
-        util.showBusy('正在登录')
-        var that = this
-
-        // 调用登录接口
-        qcloud.login({
-            success(result) {
-                if (result) {
-                    util.showSuccess('登录成功')
-                    that.setData({
-                        userInfo: result,
-                        logged: true
-                    })
-                } else {
-                    // 如果不是首次登录，不会返回用户信息，请求用户信息接口获取
-                    qcloud.request({
-                        url: config.service.requestUrl,
-                        login: true,
-                        success(result) {
-                            util.showSuccess('登录成功')
-                            that.setData({
-                                userInfo: result.data.data,
-                                logged: true
-                            })
-                        },
-
-                        fail(error) {
-                            util.showModel('请求失败', error)
-                            console.log('request fail', error)
-                        }
-                    })
-                }
-            },
-
-            fail(error) {
-                util.showModel('登录失败', error)
-                console.log('登录失败', error)
-            }
-        })
-    },
-
-    // 切换是否带有登录态
-    switchRequestMode: function (e) {
-        this.setData({
-            takeSession: e.detail.value
-        })
-        this.doRequest()
-    },
-
-    doRequest: function () {
-        util.showBusy('请求中...')
-        var that = this
-        var options = {
-            url: config.service.requestUrl,
-            login: true,
-            success (result) {
-                util.showSuccess('请求成功完成')
-                console.log('request success', result)
-                that.setData({
-                    requestResult: JSON.stringify(result.data)
-                })
-            },
-            fail (error) {
-                util.showModel('请求失败', error);
-                console.log('request fail', error);
-            }
-        }
-        if (this.data.takeSession) {  // 使用 qcloud.request 带登录态登录
-            qcloud.request(options)
-        } else {    // 使用 wx.request 则不带登录态
-            wx.request(options)
-        }
-    },
-
-    // 上传图片接口
-    doUpload: function () {
-        var that = this
-
-        // 选择图片
-        wx.chooseImage({
-            count: 1,
-            sizeType: ['compressed'],
-            sourceType: ['album', 'camera'],
-            success: function(res){
-                util.showBusy('正在上传')
-                var filePath = res.tempFilePaths[0]
-
-                console.log(filePath)
-
-                // 上传图片
-                wx.uploadFile({
-                    url: config.service.uploadUrl,
-                    filePath: filePath,
-                    name: 'file',
-
-                    success: function(res){
-                        util.showSuccess('上传图片成功')
-                        res = JSON.parse(res.data)
-                        that.setData({
-                            imgUrl: res.data.imgUrl
-                        })
-                    },
-
-                    fail: function(e) {
-                        util.showModel('上传图片失败')
-                    }
-                })
-
-            },
-            fail: function(e) {
-                console.error(e)
-            }
-        })
-    },
-
-    // 预览图片
-    previewImg: function () {
-        wx.previewImage({
-            current: this.data.imgUrl,
-            urls: [this.data.imgUrl]
-        })
-    },
-
-    // 切换信道的按钮
-    switchChange: function (e) {
-        var checked = e.detail.value
-
-        if (checked) {
-            this.openTunnel()
-        } else {
-            this.closeTunnel()
-        }
-    },
-
-    openTunnel: function () {
-        util.showBusy('信道连接中...')
-        // 创建信道，需要给定后台服务地址
-        var tunnel = this.tunnel = new qcloud.Tunnel(config.service.tunnelUrl)
-
-        // 监听信道内置消息，包括 connect/close/reconnecting/reconnect/error
-        tunnel.on('connect', () => {
-            util.showSuccess('信道已连接')
-            console.log('WebSocket 信道已连接')
-            this.setData({ tunnelStatus: 'connected' })
-        })
-
-        tunnel.on('close', () => {
-            util.showSuccess('信道已断开')
-            console.log('WebSocket 信道已断开')
-            this.setData({ tunnelStatus: 'closed' })
-        })
-
-        tunnel.on('reconnecting', () => {
-            console.log('WebSocket 信道正在重连...')
-            util.showBusy('正在重连')
-        })
-
-        tunnel.on('reconnect', () => {
-            console.log('WebSocket 信道重连成功')
-            util.showSuccess('重连成功')
-        })
-
-        tunnel.on('error', error => {
-            util.showModel('信道发生错误', error)
-            console.error('信道发生错误：', error)
-        })
-
-        // 监听自定义消息（服务器进行推送）
-        tunnel.on('speak', speak => {
-            util.showModel('信道消息', speak)
-            console.log('收到说话消息：', speak)
-        })
-
-        // 打开信道
-        tunnel.open()
-
-        this.setData({ tunnelStatus: 'connecting' })
-    },
-
-    /**
-     * 点击「发送消息」按钮，测试使用信道发送消息
-     */
-    sendMessage() {
-        if (!this.data.tunnelStatus || !this.data.tunnelStatus === 'connected') return
-        // 使用 tunnel.isActive() 来检测当前信道是否处于可用状态
-        if (this.tunnel && this.tunnel.isActive()) {
-            // 使用信道给服务器推送「speak」消息
-            this.tunnel.emit('speak', {
-                'word': 'I say something at ' + new Date(),
-            });
-        }
-    },
-
-    /**
-     * 点击「关闭信道」按钮，关闭已经打开的信道
-     */
-    closeTunnel() {
-        if (this.tunnel) {
-            this.tunnel.close();
-        }
-        util.showBusy('信道连接中...')
-        this.setData({ tunnelStatus: 'closed' })
+  plus: function () {
+    if (this.data.isPopping) {
+      //缩回动画  
+      this.popp();
+      this.setData({
+        isPopping: false
+      })
+    } else if (!this.data.isPopping) {
+      //弹出动画  
+      this.takeback();
+      this.setData({
+        isPopping: true
+      })
     }
+  },
+  input: function () {
+    console.log("input")
+  },
+  transpond: function () {
+    console.log("transpond")
+  },
+  collect: function () {
+    console.log("collect")
+  },
+
+  //弹出动画  
+  popp: function () {
+    //plus顺时针旋转  
+    var animationPlus = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease-out'
+    })
+    var animationcollect = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease-out'
+    })
+    var animationTranspond = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease-out'
+    })
+    var animationInput = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease-out'
+    })
+    animationPlus.rotateZ(180).step();
+    animationcollect.translate(10, -60).rotateZ(180).opacity(1).step();
+    animationTranspond.translate(-50, -50).rotateZ(180).opacity(1).step();
+    animationInput.translate(-60, 10).rotateZ(180).opacity(1).step();
+    this.setData({
+      animPlus: animationPlus.export(),
+      animCollect: animationcollect.export(),
+      animTranspond: animationTranspond.export(),
+      animInput: animationInput.export(),
+    })
+  },
+  //收回动画  
+  takeback: function () {
+    //plus逆时针旋转  
+    var animationPlus = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease-out'
+    })
+    var animationcollect = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease-out'
+    })
+    var animationTranspond = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease-out'
+    })
+    var animationInput = wx.createAnimation({
+      duration: 500,
+      timingFunction: 'ease-out'
+    })
+    animationPlus.rotateZ(0).step();
+    animationcollect.translate(0, 0).rotateZ(0).opacity(0).step();
+    animationTranspond.translate(0, 0).rotateZ(0).opacity(0).step();
+    animationInput.translate(0, 0).rotateZ(0).opacity(0).step();
+    this.setData({
+      animPlus: animationPlus.export(),
+      animCollect: animationcollect.export(),
+      animTranspond: animationTranspond.export(),
+      animInput: animationInput.export(),
+    })
+  },
+
+
+  navbarTap: function (e) {
+    this.setData({
+      currentTab: e.currentTarget.dataset.idx,
+      titleArray : []
+    })
+
+    this.CallTitle();
+  },
+
+  Gotopage: function (event) {
+    var url = event.currentTarget.dataset.url
+
+    wx.navigateTo({
+      url: `../${url}/${url}`,
+    })
+  },
+
+  toPost:function(event)
+  {
+    wx.navigateTo({
+      url: '../post/post',
+    })
+  },
+
+  toUser: function (event) {
+    wx.navigateTo({
+      url: '../user/user',
+    })
+  },
+
+  //搜索框
+  modalinput: function () {
+    this.setData({
+      hiddenmodalput: !this.data.hiddenmodalput
+    })
+  },
+  //取消按钮  
+  cancel: function () {
+    this.setData({
+      hiddenmodalput: true
+    });
+  },
+  //确认  
+  confirm: function () {
+    this.setData({
+      hiddenmodalput: true,
+    })
+
+    console.log(this.data.sea)
+    wx.navigateTo({
+      url: '../search/search?find=' + this.data.sea,
+    })
+    this.setData({
+      sea: ""
+    })
+  }  ,
+
+  search : function(e){
+    this.setData({
+      sea : e.detail.value
+    })
+  },
+
+  //取消按钮  
+  cancel: function () {
+    this.setData({
+      telHidden: true,
+      hiddenmodalput: true
+    });
+  },
+
+  getTel : function(e){
+    var that = this
+    var ii = e.currentTarget.dataset.ii
+    console.log(e)
+
+    var sql = "select Connection from User where OpenID='" + ii + "'"
+
+    wx.request({
+      url: 'https://867150985.myselftext.xyz/weapp/login',
+      data: {
+        sql: sql
+      },
+      header: {
+        "content-type": "application/json;charset=utf8"
+      },
+      success: function (res) {
+        that.setData({
+          tel : res.data[0]["Connection"]
+        })
+
+        that.setData({
+          telHidden: false
+        })
+      }
+    })
+  },
+
+
+  CallTitle : function() {
+    var arr = this.data.titleArray;
+
+    var nowType = "Post_" + (this.data.currentTab == 0 ? "Lost" : "Found")
+    var mxID = 23333333;
+    if (arr.length > 0) mxID = arr[arr.length - 1][nowType + "_identity"]
+
+    var sql = "select * from " + nowType + ",User where " + nowType + "_identity<" + mxID + " and User.OpenID=" + nowType + ".OpenID and StatusCompleted=1" + " ORDER BY PostTime DESC LIMIT 5;"
+
+    console.log(sql)
+
+    var that = this
+
+    wx.request({
+      url: 'https://867150985.myselftext.xyz/weapp/login',
+      data: {
+        sql: sql
+      },
+      header: {
+        "content-type": "application/json;charset=utf8"
+      },
+      success: function (res) {
+        for (var i = 0; i < res.data.length; i++)
+        {
+          arr.push(res.data[i])
+        }
+
+        console.log(arr)
+
+        that.setData({
+          titleArray: arr
+        })
+      }
+    })
+
+  },
+
+  onLoad: function () {
+    var wd = parseInt(wx.getSystemInfoSync().windowWidth / 3) - 2
+
+    this.setData({
+      imageWidth: wd,
+      imageHeight: wd,
+    })
+    this.CallTitle()
+    
+    this.setData({
+      myOpenID : app.globalData.OpenID
+    })
+  },
+
+  previewImage: function (e) {
+    var that = this
+    var current = e.target.dataset.nowurl
+    if (current == null) return
+    var i = e.target.dataset.nowid
+
+    var urls = [];
+    for (var k = 1; k <= 3; k++)
+      if (that.data.titleArray[i]["Photo" + k] != null) urls.push(that.data.titleArray[i]["Photo" + k])
+
+    wx.previewImage({
+      current: current,
+      urls: urls
+    })
+  },
+
+  visTitle : function(e) {
+    console.log(e)
+    var that = this
+    var i = e.currentTarget.dataset.noid
+
+    getApp().globalData.nowPost = this.data.titleArray[i],
+    getApp().globalData.nowType = this.data.currentTab == 0 ? "Lost" : "Found"
+
+    wx.navigateTo({
+      url: '../PostInside/PostInside',
+    })
+  },
+
+  onReachBottom : function() {
+    this.CallTitle();
+  },
+
+  onPullDownRefresh : function() {
+    this.setData({
+      titleArray : []
+    })
+
+    this.CallTitle();
+    wx.stopPullDownRefresh();
+  },
+
+  CompleteTitle : function(e) {
+
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '该帖子将被标记为完结，是否确认？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log(e)
+          var i = e.currentTarget.dataset.nid
+
+          var nowType = "Post_" + (that.data.currentTab == 0 ? "Lost" : "Found")
+          var sql = "update " + nowType + " set StatusCompleted=0 where " + nowType + "_identity=" + that.data.titleArray[i][nowType + "_identity"]
+
+          app.Send(sql)
+
+          util.showSuccess("成功")
+
+          that.setData({
+            titleArray : []
+          })
+          that.CallTitle()
+        }
+      }
+    })
+
+    
+  },
+
+  DelTitle: function (e) {
+
+    var that = this
+    wx.showModal({
+      title: '提示',
+      content: '该帖子将被删除，是否确认？',
+      success: function (res) {
+        if (res.confirm) {
+          console.log(e)
+          var i = e.currentTarget.dataset.nid
+
+          var nowType = that.data.currentTab == 0 ? "Lost" : "Found"
+          var sql1 = "delete from " + nowType + "Comments where Post_" + nowType + "_identity=" + that.data.titleArray[i]["Post_" + nowType + "_identity"]
+
+          wx.request({
+            url: 'https://867150985.myselftext.xyz/weapp/login',
+            data: {
+              sql: sql1
+            },
+            header: {
+              "content-type": "application/json;charset=utf8"
+            },
+            success: function (res) {
+              var sql = "delete from Post_" + nowType + " where Post_" + nowType + "_identity=" + that.data.titleArray[i]["Post_" + nowType + "_identity"]
+
+              console.log(sql)
+              getApp().Send(sql)
+              util.showSuccess("成功")
+
+              that.onPullDownRefresh()
+
+            }
+          })
+
+        }
+      }
+    })
+
+
+  },
+  getMap: function (e) {
+    var i = e.currentTarget.dataset.noid
+    var that = this
+
+    wx.openLocation({
+      latitude: parseFloat(that.data.titleArray[i]["Latitude"]),
+      longitude: parseFloat(that.data.titleArray[i]["Longitude"]),
+    })
+  }
+
+  
+
 })
